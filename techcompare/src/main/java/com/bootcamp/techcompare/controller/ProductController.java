@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -18,10 +19,10 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/search")
-    public String searchProducts(@RequestParam("keyword") String keyword, Model model) {
-        System.out.println(keyword);
-        System.out.println(productService.searchProducts(keyword).get(0).getTitle());
-        model.addAttribute("products", productService.searchProducts(keyword));
+    public String searchProducts(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "categories", required = false) List<String> categories, Model model) {
+        model.addAttribute("products", productService.searchProducts(keyword, categories));
+        model.addAttribute("categories", productService.fetchCategories());
+        model.addAttribute("selectedCategories", categories != null ? categories : new ArrayList<>());
         return "result"; // Thymeleaf template name for the results page
     }
 }

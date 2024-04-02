@@ -6,6 +6,19 @@
 </head>
 <body>
 <h1>Search Results</h1>
+<form action="/search" method="get">
+    <div>
+        <input type="text" name="keyword" placeholder="Search products..." required>
+        <button type="submit">Search</button>
+    </div>
+    <div>
+        <p>Select categories:</p>
+        <div th:each="category : ${categories}">
+            <input type="checkbox" th:name="categories" th:value="${category}" th:checked="${selectedCategories.contains(category)}">
+            <label th:text="${category}"></label>
+        </div>
+    </div>
+</form>
 <div th:if="${products.empty}">
     <p>No products found.</p>
 </div>
