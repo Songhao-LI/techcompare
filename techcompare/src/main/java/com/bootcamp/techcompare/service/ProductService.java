@@ -21,22 +21,31 @@ public class ProductService {
         this.restTemplate = restTemplate;
     }
 
+    // Fetch all products and search for certain keyword, filter by categories
     public List<Product> searchProducts(String keyword, List<String> categories) {
         String url = "https://fakestoreapi.com/products";
         Product[] products = restTemplate.getForObject(url, Product[].class);
-        System.out.println(products[0].getTitle());
 
         if (products == null) return List.of();
 
-        Stream<Product> productStream = Arrays.stream(products)
-                .filter(product -> product.getTitle().toLowerCase().contains(keyword.toLowerCase()) ||
-                        product.getDescription().toLowerCase().contains(keyword.toLowerCase()));
+        Stream<Product> productStream = Arrays.stream(products);
+
+        if (keyword != null){
+            productStream = productStream.filter(product -> product.getTitle().toLowerCase().contains(keyword.toLowerCase()) ||
+                    product.getDescription().toLowerCase().contains(keyword.toLowerCase()));
+        }
 
         if (categories != null && !categories.isEmpty()) {
             productStream = productStream.filter(product -> categories.contains(product.getCategory().toLowerCase()));
         }
 
         return productStream.collect(Collectors.toList());
+    }
+
+    // Fetches a single product by ID
+    public Product getProductById(int id) {
+        String url = "https://fakestoreapi.com/products/" + id;
+        return restTemplate.getForObject(url, Product.class);
     }
 
     public List<String> fetchCategories() {

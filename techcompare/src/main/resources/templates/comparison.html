@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products Comparison</title>
+    <style>
+        .highlight {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Products Comparison</h1>
+
+<div th:if="${productsToCompare.empty}">
+    <p>No product in comparison list.</p>
+</div>
+<div th:unless="${productsToCompare.empty}">
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Description</th>
+        </tr>
+        <tr th:each="product : ${productsToCompare}">
+            <td th:text="${product.title}"></td>
+            <td><img th:src="${product.image}" alt="Product Image" style="width: 100px;"></td>
+            <td th:text="${product.price}" th:class="${product.price == lowestPrice} ? 'highlight' : ''"> </td>
+            <td th:text="${product.rating.rate}" th:class="${product.rating.rate == highestRating} ? 'highlight' : ''"></td>
+            <td th:text="${product.description}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
