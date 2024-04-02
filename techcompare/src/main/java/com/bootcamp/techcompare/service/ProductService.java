@@ -28,12 +28,6 @@ public class ProductService {
 
         if (products == null) return List.of();
 
-//        return Arrays.stream(products)
-//                .filter(product -> product.getTitle().toLowerCase().contains(keyword.toLowerCase()) ||
-//                        product.getDescription().toLowerCase().contains(keyword.toLowerCase()) ||
-//                        product.getCategory().toLowerCase().contains(keyword.toLowerCase()))
-//                .collect(Collectors.toList());
-
         Stream<Product> productStream = Arrays.stream(products)
                 .filter(product -> product.getTitle().toLowerCase().contains(keyword.toLowerCase()) ||
                         product.getDescription().toLowerCase().contains(keyword.toLowerCase()));
