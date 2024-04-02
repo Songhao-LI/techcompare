@@ -1,4 +1,4 @@
-package com.bootcamp.techcompare;
+package com.bootcamp.techcompare.model;
 
 import java.net.URL;
 
