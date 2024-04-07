@@ -10,7 +10,7 @@ for web
 
 ```bash
 $ npm install
-
+```
 
 
 ## 3. How to use
@@ -19,3 +19,4 @@ for web
 
 ```bash
 $ npm run dev
+```
