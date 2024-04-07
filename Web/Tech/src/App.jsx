@@ -14,7 +14,7 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />} />
-                <Route path="/blog" element={<ProductsDetail orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />} />
+                <Route path="/blog" element={<ProductsDetail/>} />
                 {/* 其他路由 */}
             </Routes>
         </BrowserRouter>
