@@ -1,18 +1,18 @@
 import React from "react";
-import Navbar from "./Navbar/Navbar";
-import Hero from "./Hero/Hero";
-import Category from "./Category/Category";
-import Category2 from "./Category/Category2";
-import Services from "./Services/Services";
-import Banner from "./Banner/Banner";
-import Partners from "./Partners/Partners";
-import Products from "./Products/Products";
-import Blogs from "./Blogs/Blogs";
-import Footer from "./Footer/Footer";
-import Popup from "./Popup/Popup";
+import Navbar from "./Navbar/Navbar.jsx";
+import Hero from "./Hero/Hero.jsx";
+import Category from "./Category/Category.jsx";
+import Category2 from "./Category/Category2.jsx";
+import Services from "./Services/Services.jsx";
+import Banner from "./Banner/Banner.jsx";
+import Partners from "./Partners/Partners.jsx";
+import Products from "./Products/Products.jsx";
+import Blogs from "./Blogs/Blogs.jsx";
+import Footer from "./Footer/Footer.jsx";
+import Popup from "./Popup/Popup.jsx";
 
-import headphone from "../assets/hero/headphone.png";
-import smartwatch2 from "../assets/category/smartwatch2-removebg-preview.png";
+import headphone from "../../assets/hero/headphone.png";
+import smartwatch2 from "../../assets/category/smartwatch2-removebg-preview.png";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -52,7 +52,6 @@ const Home = ({ handleOrderPopup, orderPopup }) => {
 
     return (
         <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
-            <Navbar handleOrderPopup={handleOrderPopup} />
             <Hero handleOrderPopup={handleOrderPopup} />
             <Category />
             <Category2 />

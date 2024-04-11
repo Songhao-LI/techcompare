@@ -1,15 +1,15 @@
 import React from "react";
-import Heading from "../Shared/Heading";
-import ProductCard from "./ProductCard";
+import Heading from "../Shared/Heading.jsx";
+import ProductCard from "./ProductCard.jsx";
 
 // images import
-import Img1 from "../../assets/product/p-1.jpg";
-import Img2 from "../../assets/product/p-2.jpg";
-import Img3 from "../../assets/product/p-3.jpg";
-import Img4 from "../../assets/product/p-4.jpg";
-import Img5 from "../../assets/product/p-5.jpg";
-import Img6 from "../../assets/product/p-9.jpg";
-import Img7 from "../../assets/product/p-7.jpg";
+import Img1 from "../../../assets/product/p-1.jpg";
+import Img2 from "../../../assets/product/p-2.jpg";
+import Img3 from "../../../assets/product/p-3.jpg";
+import Img4 from "../../../assets/product/p-4.jpg";
+import Img5 from "../../../assets/product/p-5.jpg";
+import Img6 from "../../../assets/product/p-9.jpg";
+import Img7 from "../../../assets/product/p-7.jpg";
 
 const ProductsData = [
   {
