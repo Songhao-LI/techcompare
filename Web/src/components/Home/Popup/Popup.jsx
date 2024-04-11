@@ -6,7 +6,7 @@ import { Elements } from "@stripe/react-stripe-js";
 
 // eslint-disable-next-line react/prop-types
 const Popup = ({ orderPopup, handleOrderPopup }) => {
-  let handleOrderNow = () => {
+  const handleOrderNow = () => {
       const checkoutUrl = 'https://buy.stripe.com/test_4gw6p8cEA8555nW7st';
       console.log(checkoutUrl);
       window.location.href = checkoutUrl;
