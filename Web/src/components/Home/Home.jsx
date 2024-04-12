@@ -39,7 +39,8 @@ const BannerData2 = {
     bgColor: "#2dcc6f",
 };
 
-const Home = ({ handleOrderPopup, orderPopup, loginPopup, handleLoginPopup }) => {
+// eslint-disable-next-line react/prop-types
+const Home = ({ handleOrderPopup, orderPopup}) => {
     React.useEffect(() => {
         AOS.init({
             duration: 800,
@@ -63,7 +64,6 @@ const Home = ({ handleOrderPopup, orderPopup, loginPopup, handleLoginPopup }) =>
             <Partners />
             <Footer />
             <Popup orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />
-            <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup} />
         </div>
     );
 };

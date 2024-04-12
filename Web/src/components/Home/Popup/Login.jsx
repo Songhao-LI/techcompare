@@ -3,7 +3,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import Button from "../Shared/Button.jsx";
 
 // eslint-disable-next-line react/prop-types
-const Login = ({ loginPopup, handleLoginPopup }) => {
+const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
     const [check, setCheck] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -30,6 +30,7 @@ const Login = ({ loginPopup, handleLoginPopup }) => {
     const createAccount = () => {
         // create an account
         handleLoginPopup()
+        handleRegisterPopup()
     }
 
     const forgetPassword = () => {
