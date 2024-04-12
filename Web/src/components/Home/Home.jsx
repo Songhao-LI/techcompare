@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "./Navbar/Navbar.jsx";
 import Hero from "./Hero/Hero.jsx";
 import Category from "./Category/Category.jsx";
 import Category2 from "./Category/Category2.jsx";
@@ -10,6 +9,7 @@ import Products from "./Products/Products.jsx";
 import Blogs from "./Blogs/Blogs.jsx";
 import Footer from "./Footer/Footer.jsx";
 import Popup from "./Popup/Popup.jsx";
+import Login from "./Popup/Login.jsx";
 
 import headphone from "../../assets/hero/headphone.png";
 import smartwatch2 from "../../assets/category/smartwatch2-removebg-preview.png";
@@ -39,7 +39,7 @@ const BannerData2 = {
     bgColor: "#2dcc6f",
 };
 
-const Home = ({ handleOrderPopup, orderPopup }) => {
+const Home = ({ handleOrderPopup, orderPopup, loginPopup, handleLoginPopup }) => {
     React.useEffect(() => {
         AOS.init({
             duration: 800,
@@ -63,6 +63,7 @@ const Home = ({ handleOrderPopup, orderPopup }) => {
             <Partners />
             <Footer />
             <Popup orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />
+            <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup} />
         </div>
     );
 };

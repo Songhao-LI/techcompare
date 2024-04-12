@@ -6,16 +6,20 @@ import Navbar from "./components/Home/Navbar/Navbar.jsx";
 
 const App = () => {
     const [orderPopup, setOrderPopup] = React.useState(false);
+    const [loginPopup, setLoginPopup] = React.useState(false);
 
     const handleOrderPopup = () => {
         setOrderPopup(!orderPopup);
     };
+    const handleLoginPopup = () => {
+        setLoginPopup(!loginPopup);
+    };
 
     return (
         <BrowserRouter>
-            <Navbar handleOrderPopup={handleOrderPopup} />
+            <Navbar handleOrderPopup={handleOrderPopup} handleLoginPopup={handleLoginPopup}/>
             <Routes>
-                <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />} />
+                <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} loginPopup={loginPopup} handleLoginPopup={handleLoginPopup} />} />
                 <Route path="/ProductsDetail" element={<ProductsDetail/>} />
                 {/* 其他路由 */}
             </Routes>
