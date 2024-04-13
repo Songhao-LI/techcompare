@@ -35,8 +35,20 @@
                 <input type="hidden" th:name="productId" th:value="${product.id}">
                 <button type="submit">Add to Comparison</button>
             </form>
+            <form action="/track" method="post">
+                <input type="hidden" th:name="productId" th:value="${product.id}">
+                <button type="submit">Track price</button>
+            </form>
         </li>
     </ul>
 </div>
+
+<hr>
+<div style="align-items: center;display: flex;justify-content: center;">
+    <form action="/logout" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+
 </body>
 </html>

@@ -2,15 +2,17 @@ package com.bootcamp.techcompare.controller;
 
 import com.bootcamp.techcompare.model.Product;
 import com.bootcamp.techcompare.model.Rating;
+import com.bootcamp.techcompare.model.Tracking;
 import com.bootcamp.techcompare.service.ProductService;
+import com.bootcamp.techcompare.service.TrackingService;
+import com.bootcamp.techcompare.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -25,7 +27,10 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/search")
-    public String searchProducts(@RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "categories", required = false) List<String> categories, Model model) {
+    public String searchProducts(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "categories", required = false) List<String> categories,
+            Model model) {
         model.addAttribute("products", productService.searchProducts(keyword, categories));
         model.addAttribute("categories", productService.fetchCategories());
         model.addAttribute("selectedCategories", categories != null ? categories : new ArrayList<>());
@@ -72,7 +77,7 @@ public class ProductController {
             model.addAttribute("productsToCompare", productsToCompare);
             model.addAttribute("highestRating", highestRating);
             model.addAttribute("lowestPrice", lowestPrice);
-        }else { //?Code Logic here may need improvement
+        } else { //?Code Logic here may need improvement
             model.addAttribute("productsToCompare", new ArrayList<>());
         }
 

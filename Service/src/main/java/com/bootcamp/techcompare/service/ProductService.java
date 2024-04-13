@@ -53,5 +53,9 @@ public class ProductService {
         String[] categories = restTemplate.getForObject(url, String[].class);
         return categories != null ? Arrays.asList(categories) : new ArrayList<>();
     }
+
+    public void trackProduct(String email, String productName, double productPrice) {
+
+    }
 }
 
