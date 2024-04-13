@@ -1,7 +1,6 @@
 package com.bootcamp.techcompare.dao;
 
 import com.bootcamp.techcompare.model.Tracking;
-import com.bootcamp.techcompare.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;

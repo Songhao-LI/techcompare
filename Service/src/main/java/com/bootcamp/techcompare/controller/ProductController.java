@@ -2,10 +2,7 @@ package com.bootcamp.techcompare.controller;
 
 import com.bootcamp.techcompare.model.Product;
 import com.bootcamp.techcompare.model.Rating;
-import com.bootcamp.techcompare.model.Tracking;
 import com.bootcamp.techcompare.service.ProductService;
-import com.bootcamp.techcompare.service.TrackingService;
-import com.bootcamp.techcompare.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

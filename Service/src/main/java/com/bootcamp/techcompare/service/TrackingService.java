@@ -1,10 +1,7 @@
 package com.bootcamp.techcompare.service;
 
 import com.bootcamp.techcompare.dao.TrackingDao;
-import com.bootcamp.techcompare.dao.UserDao;
-import com.bootcamp.techcompare.model.Product;
 import com.bootcamp.techcompare.model.Tracking;
-import com.bootcamp.techcompare.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
