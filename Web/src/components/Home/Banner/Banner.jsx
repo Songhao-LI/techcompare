@@ -40,7 +40,7 @@ const Banner = ({ data }) => {
             <p data-aos="fade-up" className=" text-3xl sm:text-5xl font-bold">
               {data.title3}
             </p>
-            <p data-aos="fade-up" className="text-sm tracking-wide leading-5">
+            <p data-aos="fade-up" className="text-sm tracker-wide leading-5">
               {data.title4}
             </p>
             <div data-aos="fade-up" data-aos-offset="0">

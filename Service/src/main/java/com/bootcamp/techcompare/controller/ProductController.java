@@ -1,29 +1,24 @@
 package com.bootcamp.techcompare.controller;
 
-import com.bootcamp.techcompare.model.Product;
-import com.bootcamp.techcompare.model.Rating;
-import com.bootcamp.techcompare.model.Tracking;
+import com.bootcamp.techcompare.model.*;
 import com.bootcamp.techcompare.service.ProductService;
-import com.bootcamp.techcompare.service.TrackingService;
+import com.bootcamp.techcompare.service.TrackerService;
 import com.bootcamp.techcompare.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 public class ProductController {
 
     @Autowired
@@ -33,103 +28,174 @@ public class ProductController {
     private UserService userService;
 
     @Autowired
-    private TrackingService trackingService;
+    private TrackerService trackerService;
 
     @Operation(
-            summary = "Search product with keyworkd and categories.",
-            description = "Search product with keyworkd and categories.")
+            summary = "Search product with keyword and/or categories.",
+            description = "Search product with keyword and/or categories."
+    )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) })})
-    @GetMapping("/search")
-    public String searchProducts(
-            @RequestParam(value = "keyword", required = false) String keyword,
+            @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class))))})
+//    categories AND/OR keyword
+    @GetMapping(value="/products", produces = "application/json")
+    public ResponseEntity<List<Product>> searchProducts(
             @RequestParam(value = "categories", required = false) List<String> categories,
-            Model model) {
-        model.addAttribute("products", productService.searchProducts(keyword, categories));
-        model.addAttribute("categories", productService.fetchCategories());
-        model.addAttribute("selectedCategories", categories != null ? categories : new ArrayList<>());
-        return "result"; // Thymeleaf template name for the results page
+            @RequestParam(value = "keyword", required = false) String keyword) {
+        List<Product> products = productService.searchProducts(keyword, categories);
+        return ResponseEntity.ok(products);
     }
 
     @Operation(
-            summary = "Add product to comparison list",
-            description = "Add product to comparison list")
+            summary = "Get product by id.",
+            description = "Get product by id.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) })})
-    // Endpoint to add a product to the comparison list
-    @PostMapping("/add-to-comparison")
-    public String addToComparison(@RequestParam(value = "productId") int productId, HttpSession session) {
-        Set<Integer> comparisonList = (Set<Integer>) session.getAttribute("comparisonList");
-        if (comparisonList == null) {
-            comparisonList = new LinkedHashSet<>();
-        }
-
-        if (comparisonList.size() < 4) {
-            comparisonList.add(productId);
-        }
-
-        session.setAttribute("comparisonList", comparisonList);
-        return "redirect:/search"; // Redirect back
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Product.class)))})
+    @GetMapping(value = "/products/{id}", produces = "application/json")
+    public ResponseEntity<Product> getProductById(@PathVariable int id) {
+        Product product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
     }
 
     @Operation(
-            summary = "Compare all products in the comparison list",
-            description = "Compare all products in the comparison list.")
+            summary = "Product compare with a list of ids.",
+            description = "Get products by ids.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) })})
-    // Endpoint to show the comparison page
-    @GetMapping("/comparison")
-    public String showComparison(Model model, HttpSession session) {
-        Set<Integer> comparisonList = (Set<Integer>) session.getAttribute("comparisonList");
-        if (comparisonList != null && !comparisonList.isEmpty()) {
-            List<Product> productsToCompare = comparisonList.stream()
-                    .map(id -> productService.getProductById(id))
-                    .collect(Collectors.toList());
-
-            // Identifying highest rating and lowest price
-            double highestRating = productsToCompare.stream()
-                    .map(Product::getRating)
-                    .mapToDouble(Rating::getRate)
-                    .max()
-                    .orElse(0);
-
-            double lowestPrice = productsToCompare.stream()
-                    .mapToDouble(Product::getPrice)
-                    .min()
-                    .orElse(Double.MAX_VALUE);
-
-            model.addAttribute("productsToCompare", productsToCompare);
-            model.addAttribute("highestRating", highestRating);
-            model.addAttribute("lowestPrice", lowestPrice);
-        } else { //?Code Logic here may need improvement
-            model.addAttribute("productsToCompare", new ArrayList<>());
-        }
-
-        return "comparison"; // Thymeleaf template name
+            @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class))))})
+    @GetMapping(value="/products", params = {"ids"}, produces = "application/json")
+    public ResponseEntity<List<Product>> getProductsByIds(@RequestParam(value = "ids", required = false) List<Integer> ids) {
+        List<Product> products = ids.stream()
+                .map(productService::getProductById)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(products);
     }
 
     @Operation(
-            summary = "Track product with productId.",
-            description = "Track product with productId.")
+            summary = "Add review and rating for a product.",
+            description = "Add review and rating for a product.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) })})
-    @PostMapping("/track")
-    public String track(@RequestParam(value = "productId") int productId, HttpSession session) {
-//        1. get username from user session and retrieve his email based on that
-        String username = (String) session.getAttribute("username");
-        String email = userService.getEmailByUsername(username);
-//        2. get product name from productId
-        Product product = productService.getProductById(productId);
-//        3. get current product price
-        double currentPrice = product.getPrice();
-//        4. save (email, product_id, product_price) in trackings table
-        trackingService.add(new Tracking(email, productId, currentPrice));
-//        5. in the future when scheduled tasks is running, only one table will be
-//           accessed to send email to users
-        return "redirect:/search"; // Redirect back
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+    @PostMapping(value = "/reviews", produces = "application/json")
+    public ResponseEntity<String> addReview(@RequestBody Review review) {
+        productService.addRating(review);
+        return ResponseEntity.ok("Review added successfully.");
+    }
+
+    @Operation(
+            summary = "Get reviews and ratings for a product.",
+            description = "Get reviews and ratings for a product.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(array = @ArraySchema(schema = @Schema(implementation = ProductReviewResponse.class))) })})
+    @GetMapping(value = "/products/{productId}/reviews", produces = "application/json")
+    public ResponseEntity<List<ProductReviewResponse>> getReviews(@PathVariable int productId) {
+        List<ProductReviewResponse> productReviewResponses = productService.getRatingsByProductId(productId);
+        return ResponseEntity.ok(productReviewResponses);
+    }
+
+    @Operation(
+            summary = "Track product for a user at a specific price.",
+            description = "Track product for a user at a specific price.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+    @PostMapping(value = "/price-tracker", produces = "application/json")
+    public ResponseEntity<String> trackPrice(@RequestBody Tracker tracker) {
+        trackerService.add(tracker);
+        return ResponseEntity.ok("Price tracker set successfully.");
+    }
+
+    @Operation(
+            summary = "Get price trackers of a user.",
+            description = "Get price trackers of a user.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = UserTrackerResponse.class)) )})})
+    @GetMapping(value = "/price-tracker/{userId}", produces = "application/json")
+    public ResponseEntity<List<UserTrackerResponse>> getPriceTrackings(@PathVariable String userId) {
+        List<Tracker> trackers = trackerService.getTrackersByUserId(userId);
+        // get current price for each product of trackers
+        List<UserTrackerResponse> userTrackerResponses = trackers.stream()
+                .map(tracker -> {
+                    Product product = productService.getProductById(tracker.getProductId());
+                    return new UserTrackerResponse(tracker.getProductId(), product.getPrice(), tracker.getTargetPrice());
+                })
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userTrackerResponses);
+    }
+
+    @Operation(
+            summary = "Get all stores.",
+            description = "Get all stores.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(array = @ArraySchema(schema = @Schema(implementation = Store.class)) )})})
+    @GetMapping(value = "/stores", produces = "application/json")
+    public ResponseEntity<List<Store>> getStores() {
+        List<Store> stores = productService.fetchStores();
+        return ResponseEntity.ok(stores);
+    }
+
+    @Operation(
+            summary = "Get products of a store.",
+            description = "Get products of a store.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(array = @ArraySchema(schema = @Schema(implementation = StoreProductResponse.class))) })})
+    @GetMapping(value = "/stores/{storeId}/products", produces = "application/json")
+    public ResponseEntity<List<StoreProductResponse>> getProductsByStoreId(@PathVariable String storeId) {
+//        TODO: Implement this method
+        List<StoreProductResponse> storeProductResponses = productService.getProductsByStoreId(storeId);
+        return ResponseEntity.ok(storeProductResponses);
+    }
+
+    @Operation(
+            summary = "Add product to cart.",
+            description = "Add product to cart.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+    @PostMapping(value = "/cart-items", produces = "application/json")
+    public ResponseEntity<String> addToCart(@RequestBody CartItem cartItem) {
+        productService.addToCart(cartItem);
+        return ResponseEntity.ok("Product added to cart successfully.");
+    }
+
+    @Operation(
+            summary = "Get cart items of a user.",
+            description = "Get cart items of a user.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(array = @ArraySchema(schema = @Schema(implementation = CartItem.class))) })})
+    @GetMapping(value = "/cart-items", produces = "application/json")
+    public ResponseEntity<List<CartItem>> getCartItems(@RequestParam(value = "userId") String userId) {
+        List<CartItem> cartItems = productService.getCartItemsByUserId(userId);
+        return ResponseEntity.ok(cartItems);
+    }
+
+    @Operation(
+            summary = "Update cart item quantity.",
+            description = "Update cart item quantity.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+    @PutMapping(value = "/cart-items/{userId}/{productId}", produces = "application/json")
+    public ResponseEntity<String> updateCartItem(@PathVariable String userId, @PathVariable int productId, @RequestBody int newQuantity) {
+        productService.updateCartItem(userId, productId, newQuantity);
+        return ResponseEntity.ok("Cart item updated successfully.");
+    }
+
+    @Operation(
+            summary = "Remove cart item.",
+            description = "Remove cart item.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+    @DeleteMapping(value = "/cart-items/{userId}/{productId}", produces = "application/json")
+    public ResponseEntity<String> removeCartItem(@PathVariable String userId, @PathVariable int productId) {
+        productService.removeCartItem(userId, productId);
+        return ResponseEntity.ok("Cart item removed successfully.");
+    }
+
+    @Operation(
+            summary = "Checkout from the cart.",
+            description = "Checkout from the cart.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Order.class)) })})
+    @PostMapping(value = "/checkout", produces = "application/json")
+    public ResponseEntity<String> placeOrder(@RequestBody PaymentRequest paymentRequest) {
+//            TODO: Implement this method
+        productService.placeOrder(paymentRequest);
+        return ResponseEntity.ok("Order placed successfully.");
     }
 }

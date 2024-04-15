@@ -9,7 +9,7 @@ public class Product {
     private String description;
     private String category;
     private URL image;
-    private Rating rating;
+    private Review review;
 
     public Product(){}
 
@@ -61,11 +61,11 @@ public class Product {
         this.image = image;
     }
 
-    public Rating getRating() {
-        return rating;
+    public Review getRating() {
+        return review;
     }
 
-    public void setRating(Rating rating) {
-        this.rating = rating;
+    public void setRating(Review review) {
+        this.review = review;
     }
 }

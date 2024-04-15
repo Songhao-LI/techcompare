@@ -28,7 +28,7 @@
             <h2 th:text="${product.title}">Product Title</h2>
             <p th:text="${product.description}">Description</p>
             <p>Price: <span th:text="${product.price}">0</span></p>
-            <p>Rating: <span th:text="${product.rating.rate}">0</span></p>
+            <p>Rating: <span th:text="${product.review.rate}">0</span></p>
             <!-- Include an image if you like -->
             <img th:src="${product.image}" alt="Product Image" style="max-width: 100px; max-height: 100px;">
             <form action="/add-to-comparison" method="post">
