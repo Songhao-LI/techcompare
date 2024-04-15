@@ -1,34 +1,15 @@
 # Tech Compare
 
-## 1. Intro
-A web application that allows users to search, compare, and review tech products using data from the Best Buy API.
-
-
-## 2. Install
-
-for web
-
-```bash
-$ npm install
-```
-
-
-## 3. How to use
-
-for web
-
-```bash
-$ npm run dev
-```
-
 # Project Introduction
 
 Project Name: TechCompare
+
 Objective: Develop a web application that allows users to search, compare, and review tech products using data from the Best Buy API.
 
 API: https://developer.bestbuy.com/ | https://fakestoreapi.com/
 
 Suggested Key Features:
+
 * Product Search and Filters: Functionalities for users to search products, with filters based on categories, brands, prices, etc.
 * Product Comparison: Feature to compare multiple products based on specifications and prices.
 * User Reviews and Ratings: Registered users can rate and review products. Set up user authentication using Firebase.
@@ -38,6 +19,7 @@ Suggested Key Features:
 * Wishlist: Allow users to create and manage a wishlist of products.
 
 Suggested Timeline:
+
 * Week 1: Setup
   * Task 0: Team formation (4-5 students)
   * Task 1: Explore Best Buy API 
@@ -58,3 +40,37 @@ Suggested Timeline:
   * Task 9: Deployment
   * Task 10: Final Testing and Presentation Preparation
 * Week 9: Final Presentation
+
+# Build
+
+## Docker (both frontend and backend)
+
+`docker build -t techcompare .`
+
+`docker run -p 3000:3000 techcompare`
+
+access frontend: `http://localhost:3000`
+
+access backend: `http://localhost:3000/api/`
+
+access SpringDoc: `http://localhost:3000/swagger-ui/index.html`
+
+## Frontend
+
+install: `npm install`
+
+local run: `npm run dev`
+
+build: `npm run build`
+
+## Backend
+
+build: `./gradlew build`
+
+run: `./gradlew bootRun`
+
+## Dev instance (Google Cloud Run)
+
+https://techcompare-obufj7hhhq-uc.a.run.app/
+
+All commits are automatically deployed to the dev instance.
