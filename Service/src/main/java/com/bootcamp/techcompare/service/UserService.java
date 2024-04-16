@@ -4,6 +4,7 @@ import com.bootcamp.techcompare.dao.UserDao;
 import com.bootcamp.techcompare.model.User;
 import com.bootcamp.techcompare.model.UserLoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -30,6 +31,16 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
+    @Value("${spring.security.oauth2.client.registration.cognito.client-id}")
+    private String cognito_client_id;
+
+    @Value("${spring.security.oauth2.client.registration.cognito.client-secret}")
+    private String cognito_client_secret;
+
+    private final String cognito_user_pool_id = "us-west-1_TtGfsqs3u";
+
+    private final String cognito_user_group = "techcompare_users";
+
     public static String calculateSecretHash(String userPoolClientId, String userPoolClientSecret, String userName) {
         final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
 
@@ -52,22 +63,6 @@ public class UserService {
         userDao.persist(user);
     }
 
-//    @Autowired
-//    public UserService(RestTemplate restTemplate) {
-//        this.restTemplate = restTemplate;
-//    }
-
-//    @Transactional
-//    public boolean login(String username, String password) {
-////        return username.equals("admin") && password.equals("admin");
-////        TODO: Implement login with database
-//        return userDao.exist(new User(username, password, null));
-//    }
-
-//    public String getEmailByUsername(String username) {
-//        return userDao.getEmailByUsername(username);
-//    }
-
     // User logout
     public void logout() {
 //        cognito logout
@@ -85,7 +80,7 @@ public class UserService {
             userAttributes.add(AttributeType.builder().name("email").value(userRequest.getEmail()).build());
             // Prepare the request
             AdminCreateUserRequest createUserRequest = AdminCreateUserRequest.builder()
-                    .userPoolId("us-west-1_TtGfsqs3u") // use environment variable
+                    .userPoolId(cognito_user_pool_id) // use environment variable
                     .username(userRequest.getUsername())
                     .temporaryPassword(userRequest.getPassword())
                     .userAttributes(userAttributes)
@@ -96,7 +91,7 @@ public class UserService {
 
             // Set the user's password
             AdminSetUserPasswordRequest adminSetUserPasswordRequest = AdminSetUserPasswordRequest.builder()
-                    .userPoolId("us-west-1_TtGfsqs3u")
+                    .userPoolId(cognito_user_pool_id)
                     .username(userRequest.getUsername())
                     .password(userRequest.getPassword())
                     .permanent(true)
@@ -107,8 +102,8 @@ public class UserService {
 
             // Add the user to a group
             cognitoIdentityProviderClient.adminAddUserToGroup(AdminAddUserToGroupRequest.builder()
-                    .groupName("techcompare_users")
-                    .userPoolId("us-west-1_TtGfsqs3u")
+                    .groupName(cognito_user_group)
+                    .userPoolId(cognito_user_pool_id)
                     .username(userRequest.getUsername())
                     .build());
 
@@ -126,13 +121,12 @@ public class UserService {
 
             AdminInitiateAuthRequest authRequest = AdminInitiateAuthRequest.builder()
                     .authFlow("ADMIN_USER_PASSWORD_AUTH")
-                    .clientId("6etson0rhh8mf5trgl9h7ssq44")
-                    .userPoolId("us-west-1_TtGfsqs3u")
+                    .clientId(cognito_client_id)
+                    .userPoolId(cognito_user_pool_id)
                     .authParameters(new HashMap<>() {{
                         put("USERNAME", userRequest.getUsername());
                         put("PASSWORD", userRequest.getPassword());
-                        put("SECRET_HASH", calculateSecretHash("6etson0rhh8mf5trgl9h7ssq44", "1ibadrtitk3q7pisl4m9cf0jk4fr23drm4a1a97d70rgoah3j4er", userRequest.getUsername()));
-//                        put("DEVICE_KEY", "techcompare web");
+                        put("SECRET_HASH", calculateSecretHash(cognito_client_id, cognito_client_secret, userRequest.getUsername()));
                     }}
                     ).build();
 

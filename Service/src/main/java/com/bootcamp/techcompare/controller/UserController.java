@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import software.amazon.awssdk.services.cognitoidentityprovider.model.AuthenticationResultType;
 
 @RestController
 @RequestMapping("/api")
@@ -19,12 +20,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-//    hello world
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello, world!";
-    }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User userRequest) {
