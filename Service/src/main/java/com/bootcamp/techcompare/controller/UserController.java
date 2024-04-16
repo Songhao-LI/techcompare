@@ -18,6 +18,13 @@ import software.amazon.awssdk.services.cognitoidentityprovider.model.Authenticat
 @RequestMapping("/api")
 public class UserController {
 
+    /*
+    NOTE:
+    This class is not actually used.
+    Below API endpoints are only used in custom login and registration.
+    We are using AWS Cognito hosted UI instead of custom login and registration.
+     */
+
     @Autowired
     private UserService userService;
 
@@ -40,43 +47,10 @@ public class UserController {
         }
     }
 
-//    @Operation(
-//            summary = "User login",
-//            description = "Login user with username and password.")
-//    @ApiResponses({
-//            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) }),
-//            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) })})
-//    @PostMapping("/login")
-//    public String login(
-//            @RequestParam(value = "username", required = true) String username,
-//            @RequestParam(value = "password", required = true) String password,
-//            HttpSession session) {
-//        boolean loginSuccess = userService.login(username, password);
-//        if (loginSuccess) {
-////            set user id in session cookie with base64 username
-////            String encodedUsername = java.util.Base64.getEncoder().encodeToString(username.getBytes());
-//            session.setAttribute("username", username);
-//            return "redirect:/search.html";
-//        } else {
-//            return "redirect:/";
-//        }
-//    }
-
     @PostMapping("/logout")
     public ResponseEntity<String> logoutUser() {
         userService.logout(); // Logout user
         return ResponseEntity.ok("User logged out successfully.");
     }
 
-//    @Operation(
-//            summary = "User logout",
-//            description = "Logout user. Always returns success.")
-//    @ApiResponses({
-//            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
-//    @PostMapping("/logout")
-//    public String logout(HttpSession session) {
-//        userService.logout();
-//        session.invalidate();
-//        return "redirect:/";
-//    }
 }

@@ -69,8 +69,8 @@ build: `./gradlew build`
 
 run: `./gradlew bootRun`
 
-## Dev instance (Google Cloud Run)
+## Prod instance (Google Cloud Run)
 
-https://techcompare-obufj7hhhq-uc.a.run.app/
+https://techcompare-leetcodebootcamp.web.app
 
 All commits are automatically deployed to the dev instance.

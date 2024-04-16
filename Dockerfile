@@ -18,4 +18,5 @@ RUN gradle build
 FROM amazoncorretto:17-al2-generic
 EXPOSE 3000
 COPY --from=build-backend /backend/build/libs/*SNAPSHOT.jar /app.jar
-CMD ["java", "-jar", "/app.jar"]
+COPY entrypoint.sh /entrypoint.sh
+CMD ["bash", "/entrypoint.sh"]
