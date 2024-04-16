@@ -32,6 +32,9 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
             } else if ("ROLE_USER".equals(auth.getAuthority())) {
                 System.out.println(userAttributes.get("cognito:username") + " Is User!");
                 response.sendRedirect("/");
+            } else {
+                System.out.println("This dude has no role, but it's fine");
+                response.sendRedirect("/");
             }
         }
     }
