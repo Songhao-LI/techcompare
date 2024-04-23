@@ -5,6 +5,7 @@ import FilterProducts from "./components/FilterProducts/FilterProducts.jsx";
 import Navbar from "./components/Home/Navbar/Navbar.jsx";
 import Register from "./components/Home/Popup/Register.jsx";
 import Login from "./components/Home/Popup/Login.jsx";
+import ProductDetail from "./components/ProductDetail/ProductDetail.jsx"
 
 const App = () => {
     const [orderPopup, setOrderPopup] = React.useState(false);
@@ -29,6 +30,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup}/>} />
                 <Route path="/FilterProducts" element={<FilterProducts/>} />
+                <Route path="/ProductDetail/:productId" element={<ProductDetail/>} />
                 {/* 其他路由 */}
             </Routes>
         </BrowserRouter>
