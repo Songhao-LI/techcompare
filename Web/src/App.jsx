@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home/Home.jsx";
-import ProductsDetail from "./components/ProductsDetail/ProductsDetail.jsx";
+import FilterProducts from "./components/FilterProducts/FilterProducts.jsx";
 import Navbar from "./components/Home/Navbar/Navbar.jsx";
 import Register from "./components/Home/Popup/Register.jsx";
 import Login from "./components/Home/Popup/Login.jsx";
@@ -28,7 +28,7 @@ const App = () => {
             <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup} handleRegisterPopup={handleRegisterPopup}/>
             <Routes>
                 <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup}/>} />
-                <Route path="/ProductsDetail" element={<ProductsDetail/>} />
+                <Route path="/FilterProducts" element={<FilterProducts/>} />
                 {/* 其他路由 */}
             </Routes>
         </BrowserRouter>
