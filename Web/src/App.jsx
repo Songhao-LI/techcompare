@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './redux/store';
 import Home from "./components/Home/Home.jsx";
 import FilterProducts from "./components/FilterProducts/FilterProducts.jsx";
 import Navbar from "./components/Home/Navbar/Navbar.jsx";
@@ -23,17 +25,19 @@ const App = () => {
     };
 
     return (
-        <BrowserRouter>
-            <Navbar handleOrderPopup={handleOrderPopup} handleLoginPopup={handleLoginPopup}/>
-            <Register registerPopup={registerPopup} handleRegisterPopup={handleRegisterPopup}></Register>
-            <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup} handleRegisterPopup={handleRegisterPopup}/>
-            <Routes>
-                <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup}/>} />
-                <Route path="/FilterProducts" element={<FilterProducts/>} />
-                <Route path="/ProductDetail/:productId" element={<ProductDetail/>} />
-                {/* 其他路由 */}
-            </Routes>
-        </BrowserRouter>
+        <Provider store={store}>
+            <BrowserRouter>
+                <Navbar handleOrderPopup={handleOrderPopup} handleLoginPopup={handleLoginPopup}/>
+                <Register registerPopup={registerPopup} handleRegisterPopup={handleRegisterPopup}></Register>
+                <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup} handleRegisterPopup={handleRegisterPopup}/>
+                <Routes>
+                    <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup}/>} />
+                    <Route path="/FilterProducts" element={<FilterProducts/>} />
+                    <Route path="/ProductDetail/:productId" element={<ProductDetail/>} />
+                    {/* 其他路由 */}
+                </Routes>
+            </BrowserRouter>
+        </Provider>
     );
 };
 

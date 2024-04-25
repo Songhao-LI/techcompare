@@ -1,12 +1,15 @@
 import React, {useState} from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import Button from "../Shared/Button.jsx";
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, clearUser } from "../../../redux/actions/userActions";
 
 // eslint-disable-next-line react/prop-types
 const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
     const [check, setCheck] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const user = useSelector(state => state.user.currentUser);
 
     const clickCheckBox = () => {
         setCheck(!check);
@@ -19,6 +22,7 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
     };
 
     const loginNow = () => {
+        console.log(user)
     };
     const googleLogin = () => {
         console.log('Google')
