@@ -19,9 +19,6 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
     };
 
     const loginNow = () => {
-        const checkoutUrl = 'https://buy.stripe.com/test_4gw6p8cEA8555nW7st';
-        console.log(checkoutUrl);
-        window.location.href = checkoutUrl;
     };
     const googleLogin = () => {
         console.log('Google')
