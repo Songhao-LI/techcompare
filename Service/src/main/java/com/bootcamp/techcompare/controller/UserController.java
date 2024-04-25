@@ -14,9 +14,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.AuthenticationResultType;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
+
+    @GetMapping("/user/me")
+    public Principal user(Principal principal) {
+        return principal;
+    }
 
     /*
     NOTE:
