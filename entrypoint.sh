@@ -1,5 +1,4 @@
 #!/bin/bash
-
 JAVA_OPTS=""
 
 # check if ENVIRONMENT=PRODUCTION environment variable is set

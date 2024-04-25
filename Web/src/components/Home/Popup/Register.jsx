@@ -18,6 +18,25 @@ const Register = ({ registerPopup, handleRegisterPopup }) => {
     };
 
     const registerNow = () => {
+        const performLogin = async (email, password) => {
+            try {
+                const response = await axios.post('http://localhost:3000/api/register', {
+                    username: name,
+                    email: email,
+                    password: password
+                });
+                console.log('Login successful:', response.data);
+            } catch (error) {
+                if (error.response) {
+                    console.error('Login failed:', error.response.data);
+                } else if (error.request) {
+                    console.error('No response:', error.request);
+                } else {
+                    console.error('Error:', error.message);
+                }
+            }
+        };
+
         handleRegisterPopup()
     };
     const googleRegister = () => {

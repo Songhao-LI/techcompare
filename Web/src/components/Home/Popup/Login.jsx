@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { IoCloseOutline } from "react-icons/io5";
-import Button from "../Shared/Button.jsx";
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, clearUser } from "../../../redux/actions/userActions";
 
@@ -20,9 +20,19 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
     };
-
-    const loginNow = () => {
-        console.log(user)
+    const loginNow = async () => {
+        try {
+            const response = await axios.post('http://localhost:3000/api/login');
+            console.log('Login successful:', response.data);
+        } catch (error) {
+            if (error.response) {
+                console.error('Login failed:', error.response.data);
+            } else if (error.request) {
+                console.error('No response:', error.request);
+            } else {
+                console.error('Error:', error.message);
+            }
+        }
     };
     const googleLogin = () => {
         console.log('Google')
