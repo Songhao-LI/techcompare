@@ -13,7 +13,7 @@ import Img7 from "../../../assets/product/p-7.jpg";
 
 const ProductsData = [
   {
-    id: 1,
+    id: 1000,
     img: Img1,
     title: "Boat Headphone",
     price: "120",
@@ -75,9 +75,7 @@ const Products = () => {
   return (
     <div>
       <div className="container">
-        {/* Header section */}
         <Heading title="Our Products" subtitle={"Explore Our Products"} />
-        {/* Body section */}
         <ProductCard data={ProductsData} />
         <ProductCard data={ProductsData2} />
       </div>
