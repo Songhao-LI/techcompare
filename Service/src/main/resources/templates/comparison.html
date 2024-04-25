@@ -28,10 +28,18 @@
             <td th:text="${product.title}"></td>
             <td><img th:src="${product.image}" alt="Product Image" style="width: 100px;"></td>
             <td th:text="${product.price}" th:class="${product.price == lowestPrice} ? 'highlight' : ''"> </td>
-            <td th:text="${product.rating.rate}" th:class="${product.rating.rate == highestRating} ? 'highlight' : ''"></td>
+            <td th:text="${product.review.rate}" th:class="${product.review.rate == highestRating} ? 'highlight' : ''"></td>
             <td th:text="${product.description}"></td>
         </tr>
     </table>
 </div>
+
+<hr>
+<div style="align-items: center;display: flex;justify-content: center;">
+    <form action="/logout" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+
 </body>
 </html>

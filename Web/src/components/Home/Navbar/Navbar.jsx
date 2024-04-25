@@ -13,7 +13,7 @@ const MenuLinks = [
   {
     id: 2,
     name: "Shop",
-    link: "/#shop",
+    link: "../../FilterProducts",
   },
   {
     id: 3,
@@ -48,7 +48,7 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
           <div className="flex items-center gap-4">
             <a
               href="#"
-              className="text-primary font-semibold tracking-widest text-2xl uppercase sm:text-3xl
+              className="text-primary font-semibold tracker-widest text-2xl uppercase sm:text-3xl
 "
             >
               TechCompare
