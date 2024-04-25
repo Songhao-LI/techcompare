@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { IoCloseOutline } from "react-icons/io5";
+import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
 const Register = ({ registerPopup, handleRegisterPopup }) => {
@@ -17,27 +18,24 @@ const Register = ({ registerPopup, handleRegisterPopup }) => {
         setPassword(event.target.value);
     };
 
-    const registerNow = () => {
-        const performLogin = async (email, password) => {
-            try {
-                const response = await axios.post('http://localhost:3000/api/register', {
-                    username: name,
-                    email: email,
-                    password: password
-                });
-                console.log('Login successful:', response.data);
-            } catch (error) {
-                if (error.response) {
-                    console.error('Login failed:', error.response.data);
-                } else if (error.request) {
-                    console.error('No response:', error.request);
-                } else {
-                    console.error('Error:', error.message);
-                }
-            }
-        };
-
-        handleRegisterPopup()
+    const registerNow = async () => {
+      try {
+        const response = await axios.post('http://localhost:3000/api/register', {
+          username: name,
+          email: email,
+          password: password
+        });
+        console.log('register successful:', response.data);
+        // handleRegisterPopup()
+      } catch (error) {
+        if (error.response) {
+          console.error('register failed:', error.response.data);
+        } else if (error.request) {
+          console.error('No response:', error.request);
+        } else {
+          console.error('Error:', error.message);
+        }
+      }
     };
     const googleRegister = () => {
         console.log('Google')
@@ -94,7 +92,7 @@ const Register = ({ registerPopup, handleRegisterPopup }) => {
                                                     <hr className="h-0 border-b border-solid border-grey-500 grow"/>
                                                 </div>
                                                 <label htmlFor="name"
-                                                       className="mb-2 text-sm text-start text-grey-900">Name*</label>
+                                                       className="mb-2 text-sm text-start text-grey-900">Username*</label>
                                                 <input id="name" type="name" placeholder="your name"
                                                        value={name} onChange={handleNameChange}
                                                        className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-800 mb-7 placeholder:text-grey-700 bg-gray-200 dark:bg-gray-800 text-dark-grey-900 rounded-2xl"/>
@@ -108,7 +106,7 @@ const Register = ({ registerPopup, handleRegisterPopup }) => {
                                                 <input id="password" type="password" placeholder="Set up your password"
                                                        value={password} onChange={handlePasswordChange}
                                                        className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-800 placeholder:text-grey-700 bg-gray-200 dark:bg-gray-800 text-dark-grey-900 rounded-2xl"/>
-                                                <button onClick={registerNow}
+                                                <button onClick={registerNow} type="button"
                                                         className="w-full px-6 py-5 mt-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-primary">
                                                     Sign Up
                                                 </button>

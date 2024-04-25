@@ -7,22 +7,25 @@ import { setUser, clearUser } from "../../../redux/actions/userActions";
 // eslint-disable-next-line react/prop-types
 const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
     const [check, setCheck] = useState(false);
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const user = useSelector(state => state.user.currentUser);
 
     const clickCheckBox = () => {
         setCheck(!check);
     };
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
+    const handleUsernameChange = (event) => {
+      setUsername(event.target.value);
     };
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
     };
     const loginNow = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/login');
+            const response = await axios.post('http://localhost:3000/api/login', {
+              username: username,
+              password: password
+            });
             console.log('Login successful:', response.data);
         } catch (error) {
             if (error.response) {
@@ -75,7 +78,7 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
                                                 <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">
                                                     Sign In
                                                 </h3>
-                                                <p className="mb-4 text-slate-400">Enter your email and password</p>
+                                                <p className="mb-4 text-slate-400">Enter your username and password</p>
                                                 <a onClick={googleLogin}
                                                     className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-900 bg-green-200 dark:bg-slate-700 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300">
                                                     <img className="h-5 mr-2"
@@ -88,13 +91,13 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
                                                     <p className="mx-4 text-grey-600">or</p>
                                                     <hr className="h-0 border-b border-solid border-grey-500 grow"/>
                                                 </div>
-                                                <label htmlFor="email"
-                                                       className="mb-2 text-sm text-start text-grey-900">Email*</label>
-                                                <input id="email" type="email" placeholder="example@gmail.com" value={email} onChange={handleEmailChange}
+                                                <label htmlFor="username"
+                                                       className="mb-2 text-sm text-start text-grey-900">Username*</label>
+                                                <input id="username" type="username" placeholder="Guest" value={username} onChange={handleUsernameChange}
                                                        className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-800 mb-7 placeholder:text-grey-700 bg-gray-200 dark:bg-gray-800 text-dark-grey-900 rounded-2xl"/>
                                                 <label htmlFor="password"
                                                        className="mb-2 text-sm text-start text-grey-900">Password*</label>
-                                                <input id="password" type="password" placeholder="Enter a password" value={password} onChange={handlePasswordChange}
+                                                <input id="password" type="password" placeholder="Enter your password" value={password} onChange={handlePasswordChange}
                                                        className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-800 placeholder:text-grey-700 bg-gray-200 dark:bg-gray-800 text-dark-grey-900 rounded-2xl"/>
                                                 <div className="flex flex-row justify-between mb-8">
                                                     <label
@@ -114,7 +117,7 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
                                                         Forget password?
                                                     </a>
                                                 </div>
-                                                <button onClick={loginNow}
+                                                <button onClick={loginNow} type="button"
                                                     className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-primary">
                                                     Sign In
                                                 </button>
