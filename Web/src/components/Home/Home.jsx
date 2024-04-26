@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Hero from "./Hero/Hero.jsx";
 import Category from "./Category/Category.jsx";
 import Category2 from "./Category/Category2.jsx";
@@ -15,6 +15,8 @@ import smartwatch2 from "../../assets/category/smartwatch2-removebg-preview.png"
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
+import {setUser} from "../../redux/actions/userActions";
+import {useDispatch} from "react-redux";
 
 const BannerData = {
     discount: "30% OFF",
@@ -40,15 +42,28 @@ const BannerData2 = {
 
 // eslint-disable-next-line react/prop-types
 const Home = ({ handleOrderPopup, orderPopup}) => {
+    const dispatch = useDispatch();
     React.useEffect(() => {
-        AOS.init({
-            duration: 800,
-            easing: "ease-in-sine",
-            delay: 100,
-            offset: 100,
+      axios.get('/api/user/me')
+        .then(response => {
+          console.log(response.data);
+          dispatch(setUser({
+            username: response.data.principal.fullName,
+            email: response.data.principal.email,
+            phoneNumber: response.data.principal.phoneNumber
+          }));
+        })
+        .catch(error => {
+          console.error('Error fetching data: ', error);
         });
-        AOS.refresh();
-    }, []);
+      AOS.init({
+          duration: 800,
+          easing: "ease-in-sine",
+          delay: 100,
+          offset: 100,
+      });
+      AOS.refresh();
+    }, [dispatch]);
 
     return (
         <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
