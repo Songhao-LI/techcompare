@@ -16,6 +16,7 @@ repositories {
 }
 
 dependencies {
+//	implementation platform('com.google.cloud:spring-cloud-gcp-dependencies:4.1.4')
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -29,6 +30,7 @@ dependencies {
 	implementation group: 'software.amazon.awssdk', name: 'cognitoidentityprovider', version: '2.25.31'
 	implementation 'org.postgresql:postgresql:42.3.1'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.5.0'
+//	implementation 'com.google.cloud:spring-cloud-gcp-starter-sql-postgresql'
 }
 
 tasks.named('test') {
