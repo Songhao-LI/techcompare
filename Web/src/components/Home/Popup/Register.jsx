@@ -20,7 +20,7 @@ const Register = ({ registerPopup, handleRegisterPopup }) => {
 
     const registerNow = async () => {
       try {
-        const response = await axios.post('http://localhost:3000/api/register', {
+        const response = await axios.post('/api/register', {
           username: name,
           email: email,
           password: password
