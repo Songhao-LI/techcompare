@@ -21,7 +21,8 @@ public class TrackerTask {
     TrackerDao trackerDao;
 
 //    send email every minute (for debugging purpose); change to every 3 hours or more in production
-    @Scheduled(fixedRate = 60000)
+//    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 99999999)
     public void sendTrackingEmails() {
 //        TODO: outdated description
 //        1. get all (email, productId, price) pairs from the database
