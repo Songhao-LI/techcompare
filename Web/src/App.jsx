@@ -27,8 +27,13 @@ const App = () => {
     };
 
     React.useEffect(() => {
-      const user = axios.post('/api/user/me');
-      console.log(user.data);
+      axios.get('/api/user/me')
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.error('Error fetching data: ', error);
+        });
     }, []);
 
     return (
