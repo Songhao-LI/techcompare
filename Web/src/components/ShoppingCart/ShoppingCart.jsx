@@ -1,5 +1,7 @@
 import React from "react";
 import AOS from "aos";
+import Img1 from "../../assets/product/p-1.jpg";
+import Img2 from "../../assets/product/p-2.jpg";
 
 const ShoppingCart = (handleOrderPopup) => {
   React.useEffect(() => {
@@ -16,17 +18,16 @@ const ShoppingCart = (handleOrderPopup) => {
     const checkoutUrl = 'https://buy.stripe.com/test_4gw6p8cEA8555nW7st';
     console.log(checkoutUrl);
     window.location.href = checkoutUrl;
-    handleOrderPopup();
   }
 
   return (
     <div className="h-screen bg-gray-100 dark:bg-gray-900 pt-20">
-      <h1 className="mb-10 text-center text-2xl font-bold dark:text-white">Cart Items</h1>
+      <h1 className="mb-10 text-center text-2xl font-bold dark:text-slate-500">Cart Items</h1>
       <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
         <div className="rounded-lg md:w-2/3">
           <div data-aos="flip-left" data-aos-delay={100} className="justify-between mb-6 rounded-lg dark:bg-gray-400 bg-white p-6 shadow-md sm:flex sm:justify-start">
             <img
-              src="/src/assets/product/p-1.jpg"
+              src={Img1}
               alt="product-image" className="w-full rounded-lg sm:w-40"/>
             <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
               <div className="mt-5 sm:mt-0">
@@ -54,7 +55,7 @@ const ShoppingCart = (handleOrderPopup) => {
           </div>
           <div data-aos="flip-left" data-aos-delay={100} className="justify-between mb-6 rounded-lg dark:bg-gray-400 bg-white p-6 shadow-md sm:flex sm:justify-start">
             <img
-              src="/src/assets/product/p-2.jpg"
+              src={Img2}
               alt="product-image" className="w-full rounded-lg sm:w-40"/>
             <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
               <div className="mt-5 sm:mt-0">
