@@ -27,7 +27,7 @@ const App = () => {
     };
 
     React.useEffect(() => {
-      const user = axios.post('/api/user/me');
+      const user = axios.get('/api/user/me');
       console.log(user);
     }, []);
 
