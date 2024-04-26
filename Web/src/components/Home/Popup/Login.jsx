@@ -9,8 +9,8 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
     const [check, setCheck] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const user = useSelector(state => state.user.currentUser);
-    console.log(user)
+    const current_user = useSelector(state => state.user.currentUser);
+    console.log(current_user)
 
     const clickCheckBox = () => {
         setCheck(!check);
