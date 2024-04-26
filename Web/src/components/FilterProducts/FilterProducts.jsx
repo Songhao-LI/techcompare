@@ -26,7 +26,7 @@ const FilterProducts = () => {
             keyword: keyword,
             // ids:
         });
-        fetch(`http://localhost:3000/api/products?${formData}`, {
+        fetch(`/api/products?${formData}`, {
             method: 'GET',
         })
             .then(response => {

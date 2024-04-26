@@ -23,7 +23,7 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
     };
     const loginNow = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/login', {
+            const response = await axios.post('/api/login', {
               username: username,
               password: password
             });
