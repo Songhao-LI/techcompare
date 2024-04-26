@@ -25,7 +25,7 @@ const ShoppingCart = (handleOrderPopup) => {
       <h1 className="mb-10 text-center text-2xl font-bold dark:text-slate-500">Cart Items</h1>
       <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
         <div className="rounded-lg md:w-2/3">
-          <div data-aos="flip-left" data-aos-delay={100} className="justify-between mb-6 rounded-lg dark:bg-gray-400 bg-white p-6 shadow-md sm:flex sm:justify-start">
+          <div data-aos="flip-left" data-aos-delay={100} className="dark:shadow-cyan-500/50 shadow-xl justify-between mb-6 rounded-lg dark:bg-gray-400 bg-white p-6 shadow-md sm:flex sm:justify-start">
             <img
               src={Img1}
               alt="product-image" className="w-full rounded-lg sm:w-40"/>
@@ -53,7 +53,7 @@ const ShoppingCart = (handleOrderPopup) => {
               </div>
             </div>
           </div>
-          <div data-aos="flip-left" data-aos-delay={100} className="justify-between mb-6 rounded-lg dark:bg-gray-400 bg-white p-6 shadow-md sm:flex sm:justify-start">
+          <div data-aos="flip-left" data-aos-delay={100} className="dark:shadow-cyan-500/50 shadow-xl justify-between mb-6 rounded-lg dark:bg-gray-400 bg-white p-6 shadow-md sm:flex sm:justify-start">
             <img
               src={Img2}
               alt="product-image" className="w-full rounded-lg sm:w-40"/>
@@ -82,7 +82,7 @@ const ShoppingCart = (handleOrderPopup) => {
             </div>
           </div>
         </div>
-        <div data-aos="flip-left" data-aos-delay={100} className="mt-6 h-full rounded-lg border dark:bg-gray-400 bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+        <div data-aos="flip-left" data-aos-delay={100} className="dark:shadow-cyan-500/50 shadow-xl mt-6 h-full rounded-lg border dark:bg-gray-400 bg-white p-6 shadow-md md:mt-0 md:w-1/3">
           <div className="mb-2 flex justify-between">
             <p className="text-gray-700">Subtotal</p>
             <p className="text-gray-700">$400.00</p>
