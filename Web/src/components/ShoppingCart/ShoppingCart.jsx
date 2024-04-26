@@ -1,6 +1,17 @@
 import React from "react";
+import AOS from "aos";
 
 const ShoppingCart = (handleOrderPopup) => {
+  React.useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+      offset: 100,
+    });
+    AOS.refresh();
+  }, []);
+
   const handleCheck = () => {
     const checkoutUrl = 'https://buy.stripe.com/test_4gw6p8cEA8555nW7st';
     console.log(checkoutUrl);
@@ -13,7 +24,7 @@ const ShoppingCart = (handleOrderPopup) => {
       <h1 className="mb-10 text-center text-2xl font-bold dark:text-white">Cart Items</h1>
       <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
         <div className="rounded-lg md:w-2/3">
-          <div className="justify-between mb-6 rounded-lg dark:bg-gray-400 bg-white p-6 shadow-md sm:flex sm:justify-start">
+          <div data-aos="flip-left" data-aos-delay={100} className="justify-between mb-6 rounded-lg dark:bg-gray-400 bg-white p-6 shadow-md sm:flex sm:justify-start">
             <img
               src="/src/assets/product/p-1.jpg"
               alt="product-image" className="w-full rounded-lg sm:w-40"/>
@@ -41,7 +52,7 @@ const ShoppingCart = (handleOrderPopup) => {
               </div>
             </div>
           </div>
-          <div className="justify-between mb-6 rounded-lg dark:bg-gray-400 bg-white p-6 shadow-md sm:flex sm:justify-start">
+          <div data-aos="flip-left" data-aos-delay={100} className="justify-between mb-6 rounded-lg dark:bg-gray-400 bg-white p-6 shadow-md sm:flex sm:justify-start">
             <img
               src="/src/assets/product/p-2.jpg"
               alt="product-image" className="w-full rounded-lg sm:w-40"/>
@@ -70,7 +81,7 @@ const ShoppingCart = (handleOrderPopup) => {
             </div>
           </div>
         </div>
-        <div className="mt-6 h-full rounded-lg border dark:bg-gray-400 bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+        <div data-aos="flip-left" data-aos-delay={100} className="mt-6 h-full rounded-lg border dark:bg-gray-400 bg-white p-6 shadow-md md:mt-0 md:w-1/3">
           <div className="mb-2 flex justify-between">
             <p className="text-gray-700">Subtotal</p>
             <p className="text-gray-700">$400.00</p>
