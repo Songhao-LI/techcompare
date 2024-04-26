@@ -1,14 +1,15 @@
 import React, {useEffect} from "react";
+import store from './redux/store';
+import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {Provider, useDispatch} from 'react-redux';
-import store from './redux/store';
 import Home from "./components/Home/Home.jsx";
 import FilterProducts from "./components/FilterProducts/FilterProducts.jsx";
 import Navbar from "./components/Home/Navbar/Navbar.jsx";
 import Register from "./components/Home/Popup/Register.jsx";
 import Login from "./components/Home/Popup/Login.jsx";
 import ProductDetail from "./components/ProductDetail/ProductDetail.jsx"
-import axios from "axios";
+import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 
 const App = () => {
     const [orderPopup, setOrderPopup] = React.useState(false);
@@ -39,6 +40,7 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup}/>} />
                     <Route path="/FilterProducts" element={<FilterProducts/>} />
+                    <Route path="/ShoppingCart" element={<ShoppingCart handleOrderPopup={handleOrderPopup}/>} />
                     <Route path="/ProductDetail/:productId" element={<ProductDetail/>} />
                     {/* 其他路由 */}
                 </Routes>

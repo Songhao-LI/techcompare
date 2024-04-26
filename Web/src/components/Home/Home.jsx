@@ -41,8 +41,6 @@ const BannerData2 = {
 // eslint-disable-next-line react/prop-types
 const Home = ({ handleOrderPopup, orderPopup}) => {
     React.useEffect(() => {
-        const user = axios.post('http://localhost:3000/api/user/me');
-        console.log(user);
         AOS.init({
             duration: 800,
             easing: "ease-in-sine",
