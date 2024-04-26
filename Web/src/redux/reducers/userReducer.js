@@ -1,6 +1,7 @@
 const initialState = {
     currentUser: {
-        name: "Guest",
+        username: "Guest",
+        password: '123456',
         email: "test@example.com",
         isAuthenticated: false
     }

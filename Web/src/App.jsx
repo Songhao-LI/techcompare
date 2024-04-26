@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Provider } from 'react-redux';
+import {Provider, useDispatch} from 'react-redux';
 import store from './redux/store';
 import Home from "./components/Home/Home.jsx";
 import FilterProducts from "./components/FilterProducts/FilterProducts.jsx";
@@ -8,6 +8,7 @@ import Navbar from "./components/Home/Navbar/Navbar.jsx";
 import Register from "./components/Home/Popup/Register.jsx";
 import Login from "./components/Home/Popup/Login.jsx";
 import ProductDetail from "./components/ProductDetail/ProductDetail.jsx"
+import axios from "axios";
 
 const App = () => {
     const [orderPopup, setOrderPopup] = React.useState(false);
@@ -23,6 +24,11 @@ const App = () => {
     const handleRegisterPopup = () => {
         setRegisterPopup(!registerPopup);
     };
+
+    React.useEffect(() => {
+      const user = axios.post('http://localhost:3000/api/user/me');
+      console.log(user);
+    }, []);
 
     return (
         <Provider store={store}>

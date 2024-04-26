@@ -10,6 +10,7 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const user = useSelector(state => state.user.currentUser);
+    console.log(user)
 
     const clickCheckBox = () => {
         setCheck(!check);
@@ -93,7 +94,7 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
                                                 </div>
                                                 <label htmlFor="username"
                                                        className="mb-2 text-sm text-start text-grey-900">Username*</label>
-                                                <input id="username" type="username" placeholder="Guest" value={username} onChange={handleUsernameChange}
+                                                <input id="username" type="username" placeholder="Enter your username" value={username} onChange={handleUsernameChange}
                                                        className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-800 mb-7 placeholder:text-grey-700 bg-gray-200 dark:bg-gray-800 text-dark-grey-900 rounded-2xl"/>
                                                 <label htmlFor="password"
                                                        className="mb-2 text-sm text-start text-grey-900">Password*</label>
