@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import store from './redux/store';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route, HashRouter} from "react-router-dom";
 import { Provider, useDispatch } from 'react-redux';
 import Home from "./components/Home/Home.jsx";
 import FilterProducts from "./components/FilterProducts/FilterProducts.jsx";
@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter>
         <Navbar handleOrderPopup={handleOrderPopup} handleLoginPopup={handleLoginPopup} />
         <Register registerPopup={registerPopup} handleRegisterPopup={handleRegisterPopup} />
         <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup} handleRegisterPopup={handleRegisterPopup} />
@@ -38,7 +38,7 @@ const App = () => {
           <Route path="/ProductDetail/:productId" element={<ProductDetail />} />
           {/* 其他路由 */}
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   );
 };

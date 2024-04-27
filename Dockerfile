@@ -2,7 +2,7 @@
 FROM node:20 as build-frontend
 WORKDIR /app
 COPY Web/package.json Web/package-lock.json ./
-RUN npm install
+RUN npm install --loglevel verbose
 COPY Web/ ./
 RUN npm run build
 
@@ -12,7 +12,7 @@ WORKDIR /backend
 COPY --chown=gradle:gradle Service/ ./
 RUN rm -rf /backend/src/main/resources/static && rm -rf /backend/src/main/resources/templates
 COPY --from=build-frontend /app/dist /backend/src/main/resources/static
-RUN gradle build
+RUN gradle build --no-daemon
 
 # Stage 3: Run the application
 FROM amazoncorretto:17-al2-generic
