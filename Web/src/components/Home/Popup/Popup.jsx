@@ -8,7 +8,6 @@ import { Elements } from "@stripe/react-stripe-js";
 const Popup = ({ orderPopup, handleOrderPopup }) => {
   const handleOrderNow = () => {
       const checkoutUrl = 'https://buy.stripe.com/test_4gw6p8cEA8555nW7st';
-      console.log(checkoutUrl);
       window.location.href = checkoutUrl;
   };
 

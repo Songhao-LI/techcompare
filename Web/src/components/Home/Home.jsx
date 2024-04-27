@@ -74,7 +74,7 @@ const Home = ({ handleOrderPopup, orderPopup}) => {
           <Category2 />
           <Services />
           <Banner data={BannerData} />
-          <Products />
+          <Products notification={handleOrderPopup}/>
           <Banner data={BannerData2} />
           <Blogs />
           <Partners />
