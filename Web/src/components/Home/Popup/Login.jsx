@@ -6,6 +6,7 @@ import { setUser, clearUser } from "../../../redux/actions/userActions";
 
 // eslint-disable-next-line react/prop-types
 const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
+    const dispatch = useDispatch();
     const [check, setCheck] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -22,21 +23,27 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
         setPassword(event.target.value);
     };
     const loginNow = async () => {
-        try {
-            const response = await axios.post('/api/login', {
-              username: username,
-              password: password
-            });
-            console.log('Login successful:', response.data);
-        } catch (error) {
-            if (error.response) {
-                console.error('Login failed:', error.response.data);
-            } else if (error.request) {
-                console.error('No response:', error.request);
-            } else {
-                console.error('Error:', error.message);
-            }
-        }
+      dispatch(setUser({
+        username: username,
+        email: '',
+        phoneNumber: ''
+      }));
+      handleLoginPopup();
+      // try {
+      //     const response = await axios.post('/api/login', {
+      //       username: username,
+      //       password: password
+      //     });
+      //     console.log('Login successful:', response.data);
+      // } catch (error) {
+      //     if (error.response) {
+      //         console.error('Login failed:', error.response.data);
+      //     } else if (error.request) {
+      //         console.error('No response:', error.request);
+      //     } else {
+      //         console.error('Error:', error.message);
+      //     }
+      // }
     };
     const googleLogin = () => {
         console.log('Google')

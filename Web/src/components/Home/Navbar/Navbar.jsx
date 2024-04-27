@@ -4,6 +4,8 @@ import { FaCaretDown, FaCartShopping } from "react-icons/fa6";
 import DarkMode from "./DarkMode.jsx";
 import Button from "../Shared/Button.jsx";
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {clearUser} from "../../../redux/actions/userActions";
 
 const MenuLinks = [
   {
@@ -14,7 +16,7 @@ const MenuLinks = [
   {
     id: 2,
     name: "Shop",
-    link: "../../FilterProducts",
+    link: "/FilterProducts",
   },
   {
     id: 3,
@@ -41,17 +43,19 @@ const DropdownLinks = [
   },
 ];
 const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
+  const current_user = useSelector(state => state.user.currentUser);
+  const dispatch = useDispatch();
+  const SignOut = () => {
+    dispatch(clearUser());
+  }
+
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">
       <div className="py-4">
         <div className="container flex justify-between items-center">
           {/* Logo and Links section */}
           <div className="flex items-center gap-4">
-            <a
-              href="#"
-              className="text-primary font-semibold tracker-widest text-2xl uppercase sm:text-3xl
-"
-            >
+            <a href="#" className="text-primary font-semibold tracker-widest text-2xl uppercase sm:text-3xl">
               TechCompare
             </a>
             {/* Menu Items */}
@@ -59,13 +63,14 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
               <ul className="flex items-center gap-4">
                 {MenuLinks.map((data, index) => (
                   <li key={index}>
-                    <a
+                    <Link to={data.link}>
+                    <span
                       href={data.link}
-                      className="inline-block px-4 font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200"
-                    >
+                      className="inline-block px-4 font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200">
                       {" "}
                       {data.name}
-                    </a>
+                    </span>
+                    </Link>
                   </li>
                 ))}
                 {/* Dropdown  */}
@@ -130,11 +135,52 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
               <DarkMode/>
             </div>
 
-            <Button className="relative"
-                text="Login"
-                bgColor={"bg-primary"}
-                textColor={"text-white"} handler={handleLoginPopup}
-            />
+            {/* Account section */}
+            {current_user.isLogin && (
+              <div>
+                {/* Menu Items */}
+                <div className="hidden lg:block">
+                  <ul className="flex items-center gap-4">
+                    {/* Dropdown  */}
+                    <li className="relative cursor-pointer group">
+                      <a
+                        href="#"
+                        className="flex items-center gap-[2px] font-semibold text-gray-500 dark:hover:text-white py-2"
+                      >
+                        My Account
+                        <span>
+                      <FaCaretDown className="group-hover:rotate-180 duration-300" />
+                    </span>
+                      </a>
+                      {/* Dropdown Links */}
+                      <div className="absolute z-[9999] hidden group-hover:block w-[200px] rounded-md bg-white shadow-md dark:bg-gray-900 p-2 dark:text-white ">
+                        <ul className="space-y-2">
+                          <li>
+                            <span className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                              Account Info
+                            </span>
+                            <span className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                              Settings
+                            </span>
+                            <span onClick={SignOut}
+                              className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                              Sign Out
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            )}
+            {!current_user.isLogin && (
+              <Button className="relative"
+                      text="Login"
+                      bgColor={"bg-primary"}
+                      textColor={"text-white"} handler={handleLoginPopup}
+              />
+            )}
           </div>
         </div>
       </div>
