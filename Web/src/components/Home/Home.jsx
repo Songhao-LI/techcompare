@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {setUser} from "../../redux/actions/userActions";
 import {useDispatch} from "react-redux";
 import Hero from "./Hero/Hero.jsx";
@@ -50,7 +50,7 @@ const Home = ({ handleOrderPopup, orderPopup, handleConfirmPopup, confirmPopup})
         .then(response => {
           console.log(response.data);
           dispatch(setUser({
-            username: response.data.principal.fullName,
+            username: response.data.principal.userInfo.claims.username,
             email: response.data.principal.email,
             phoneNumber: response.data.principal.phoneNumber
           }));
