@@ -3,6 +3,7 @@ package com.bootcamp.techcompare.service;
 import com.bootcamp.techcompare.dao.CartItemDao;
 import com.bootcamp.techcompare.dao.ReviewDao;
 import com.bootcamp.techcompare.dao.StoreDao;
+import com.bootcamp.techcompare.dao.WishlistItemDao;
 import com.bootcamp.techcompare.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,8 @@ public class ProductService {
 
     @Autowired
     private CartItemDao cartItemDao;
+    @Autowired
+    private WishlistItemDao wishlistItemDao;
 
     @Autowired
     public ProductService(RestTemplate restTemplate) {
@@ -90,8 +93,16 @@ public class ProductService {
         cartItemDao.persist(cartItem);
     }
 
+    public void addToWishlist(WishlistItem wishlistItem) {
+        wishlistItemDao.persist(wishlistItem);
+    }
+
     public List<CartItem> getCartItemsByUsername(String username) {
         return cartItemDao.getCartItemsByUsername(username);
+    }
+
+    public List<WishlistItem> getWishlistItemsByUsername(String username) {
+        return wishlistItemDao.getWishlistItemByUsername(username);
     }
 
     public void updateCartItem(String username, int productId, int newQuantity) {
@@ -110,6 +121,16 @@ public class ProductService {
         for (CartItem cartItem : cartItems) {
             if (cartItem.getProductId() == productId) {
                 cartItemDao.remove(cartItem);
+                break;
+            }
+        }
+    }
+
+    public void removeWishlistItem(String username, int productId) {
+        List<WishlistItem> wishlistItems = wishlistItemDao.getWishlistItemByUsername(username);
+        for (WishlistItem wishlistItem : wishlistItems) {
+            if (wishlistItem.getProductId() == productId) {
+                wishlistItemDao.remove(wishlistItem);
                 break;
             }
         }

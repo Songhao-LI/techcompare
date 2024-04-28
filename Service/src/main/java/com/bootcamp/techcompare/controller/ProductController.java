@@ -188,6 +188,39 @@ public class ProductController {
     }
 
     @Operation(
+            summary = "Add product to wishlist.",
+            description = "Add product to wishlist.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+    @PostMapping(value = "/wishlist-items", produces = "application/json")
+    public ResponseEntity<String> addToWishlist(@RequestBody WishlistItem wishlistItem) {
+        productService.addToWishlist(wishlistItem);
+        return ResponseEntity.ok("Product added to wishlist successfully.");
+    }
+
+    @Operation(
+            summary = "Get wishlist items of a user.",
+            description = "Get wishlist items of a user.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(array = @ArraySchema(schema = @Schema(implementation = WishlistItem.class))) })})
+    @GetMapping(value = "/wishlist-items", produces = "application/json")
+    public ResponseEntity<List<WishlistItem>> getWishlistItems(@RequestParam(value = "username") String username) {
+        List<WishlistItem> wishlistItems = productService.getWishlistItemsByUsername(username);
+        return ResponseEntity.ok(wishlistItems);
+    }
+
+    @Operation(
+            summary = "Remove wishlist item.",
+            description = "Remove wishlist item.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+    @DeleteMapping(value = "/wishlist-items/{username}/{productId}", produces = "application/json")
+    public ResponseEntity<String> removeWishlistItem(@PathVariable String username, @PathVariable int productId) {
+        productService.removeWishlistItem(username, productId);
+        return ResponseEntity.ok("Wishlist item removed successfully.");
+    }
+
+    @Operation(
             summary = "Checkout from the cart.",
             description = "Checkout from the cart.")
     @ApiResponses({
