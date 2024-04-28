@@ -44,7 +44,7 @@ public class TechcompareApplication {
 	@Bean
 	CommandLineRunner initDatabase(ReviewRepository reviewRepository, StoreRepository storeRepository, CartItemRepository cartItemRepository) {
 		return args -> {
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 1; i++) {
 				reviewRepository.save(new Review("helinyi", generateRandomNumber(), generateRandomDouble(), generateRandomStringForComment()));
 				storeRepository.save(new Store(generateRandomStoreAddress()));
 				cartItemRepository.save(new CartItem("helinyi", generateRandomNumber(), generateRandomNumber()));
