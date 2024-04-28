@@ -4,6 +4,7 @@ import com.bootcamp.techcompare.model.Tracker;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class TrackerDao {
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     public void persist(Tracker tracker) {
         em.persist(tracker);
     }
