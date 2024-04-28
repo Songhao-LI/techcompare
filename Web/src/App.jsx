@@ -12,6 +12,7 @@ import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
+  const [confirmPopup, setConfirmPopup] = React.useState(false);
   const [loginPopup, setLoginPopup] = React.useState(false);
   const [registerPopup, setRegisterPopup] = React.useState(false);
 
@@ -24,6 +25,9 @@ const App = () => {
   const handleRegisterPopup = () => {
     setRegisterPopup(!registerPopup);
   };
+  const handleConfirmPopup = () => {
+    setConfirmPopup(!confirmPopup)
+  }
 
   return (
     <Provider store={store}>
@@ -32,7 +36,7 @@ const App = () => {
         <Register registerPopup={registerPopup} handleRegisterPopup={handleRegisterPopup} />
         <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup} handleRegisterPopup={handleRegisterPopup} />
         <Routes>
-          <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />} />
+          <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup}/>} />
           <Route path="/FilterProducts" element={<FilterProducts />} />
           <Route path="/ShoppingCart" element={<ShoppingCart handleOrderPopup={handleOrderPopup} />} />
           <Route path="/ProductDetail/:productId" element={<ProductDetail />} />

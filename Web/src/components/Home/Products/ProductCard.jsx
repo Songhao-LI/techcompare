@@ -3,7 +3,7 @@ import Button from "../Shared/Button.jsx";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/actions/cartActions";
 
-const ProductCard = ({ notification, data }) => {
+const ProductCard = ({ confirmPopup, handleConfirmPopup, data }) => {
   const dispatch = useDispatch();
   const addToCartHandler = (item) => {
     const child = {
@@ -14,7 +14,7 @@ const ProductCard = ({ notification, data }) => {
       price: item.price
     }
     dispatch(addToCart(child));
-    console.log(notification)
+    handleConfirmPopup();
   }
 
   return (

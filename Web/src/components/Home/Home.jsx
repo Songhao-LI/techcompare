@@ -1,4 +1,6 @@
 import React, {useEffect} from "react";
+import {setUser} from "../../redux/actions/userActions";
+import {useDispatch} from "react-redux";
 import Hero from "./Hero/Hero.jsx";
 import Category from "./Category/Category.jsx";
 import Category2 from "./Category/Category2.jsx";
@@ -9,15 +11,14 @@ import Products from "./Products/Products.jsx";
 import Blogs from "./Blogs/Blogs.jsx";
 import Footer from "./Footer/Footer.jsx";
 import Popup from "./Popup/Popup.jsx";
+import Toast from "./Shared/Toast";
+import Confirm from "./Popup/Confirm";
 import headphone from "../../assets/hero/headphone.png";
 import smartwatch2 from "../../assets/category/smartwatch2-removebg-preview.png";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
-import {setUser} from "../../redux/actions/userActions";
-import {useDispatch} from "react-redux";
-import Toast from "./Shared/Toast";
 
 const BannerData = {
     discount: "30% OFF",
@@ -42,7 +43,7 @@ const BannerData2 = {
 };
 
 // eslint-disable-next-line react/prop-types
-const Home = ({ handleOrderPopup, orderPopup}) => {
+const Home = ({ handleOrderPopup, orderPopup, handleConfirmPopup, confirmPopup}) => {
     const dispatch = useDispatch();
     React.useEffect(() => {
       axios.get('/api/user/me')
@@ -74,12 +75,13 @@ const Home = ({ handleOrderPopup, orderPopup}) => {
           <Category2 />
           <Services />
           <Banner data={BannerData} />
-          <Products notification={handleOrderPopup}/>
+          <Products confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup}/>
           <Banner data={BannerData2} />
           <Blogs />
           <Partners />
           <Footer />
           <Popup orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />
+          <Confirm confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup}></Confirm>
         </div>
     );
 };

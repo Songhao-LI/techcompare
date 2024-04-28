@@ -71,13 +71,14 @@ const ProductsData2 = [
     aosDelay: "600",
   },
 ];
-const Products = (notification) => {
+const Products = ({confirmPopup, handleConfirmPopup}) => {
+  console.log(handleConfirmPopup)
   return (
     <div>
       <div className="container">
         <Heading title="Our Products" subtitle={"Explore Our Products"} />
-        <ProductCard notification={notification} data={ProductsData} />
-        <ProductCard notification={notification} data={ProductsData2} />
+        <ProductCard confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup} data={ProductsData} />
+        <ProductCard confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup} data={ProductsData2} />
       </div>
     </div>
   );
