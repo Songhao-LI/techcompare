@@ -10,4 +10,12 @@ public class Store {
     private int id;
 
     private String location;
+
+    public Store(String location) {
+        this.location = location;
+    }
+
+    public Store() {
+
+    }
 }

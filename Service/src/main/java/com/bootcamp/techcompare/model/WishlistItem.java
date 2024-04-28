@@ -3,21 +3,19 @@ package com.bootcamp.techcompare.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "reviews")
-public class Review {
+@Table(name = "wishlist_items")
+public class WishlistItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    public Review(String username, int productId, double rate, String comment) {
+    public WishlistItem(String username, int productId) {
         this.username = username;
         this.productId = productId;
-        this.rate = rate;
-        this.comment = comment;
     }
 
-    public Review() {
+    public WishlistItem() {
 
     }
 
@@ -37,29 +35,7 @@ public class Review {
         this.productId = productId;
     }
 
-    public double getRate() {
-        return rate;
-    }
-
-    public void setRate(double rate) {
-        this.rate = rate;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-//    private int userId;
     private String username;
 
     private int productId;
-
-    private double rate;
-
-    private String comment;
-
 }

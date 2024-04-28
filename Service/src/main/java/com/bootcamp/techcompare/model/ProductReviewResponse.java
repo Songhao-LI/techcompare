@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 
 public class ProductReviewResponse {
 
-    public ProductReviewResponse(int userId, double rate, String comment) {
-        this.userId = userId;
+    public ProductReviewResponse(String username, double rate, String comment) {
+        this.username = username;
         this.rate = rate;
         this.comment = comment;
     }
 
-    private int userId;
+    private String username;
 
     public double getRate() {
         return rate;
@@ -20,12 +20,12 @@ public class ProductReviewResponse {
         this.rate = rate;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getComment() {

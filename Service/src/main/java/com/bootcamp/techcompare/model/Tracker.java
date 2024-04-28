@@ -10,21 +10,21 @@ public class Tracker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    public int getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    private int userId;
+    private String username;
     private int productId;
     private double targetPrice;
 //    private String email;
 
-    public Tracker(int userId, int productId, double targetPrice) {
-        this.userId = userId;
+    public Tracker(String username, int productId, double targetPrice) {
+        this.username = username;
         this.productId = productId;
         this.targetPrice = targetPrice;
     }
