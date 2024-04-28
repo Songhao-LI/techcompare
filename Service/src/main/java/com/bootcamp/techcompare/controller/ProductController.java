@@ -219,16 +219,4 @@ public class ProductController {
         productService.removeWishlistItem(username, productId);
         return ResponseEntity.ok("Wishlist item removed successfully.");
     }
-
-    @Operation(
-            summary = "Checkout from the cart.",
-            description = "Checkout from the cart.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Order.class)) })})
-    @PostMapping(value = "/checkout", produces = "application/json")
-    public ResponseEntity<String> placeOrder(@RequestBody PaymentRequest paymentRequest) {
-//            TODO: Implement this method
-        productService.placeOrder(paymentRequest);
-        return ResponseEntity.ok("Order placed successfully.");
-    }
 }

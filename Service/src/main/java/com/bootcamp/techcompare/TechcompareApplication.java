@@ -1,7 +1,9 @@
 package com.bootcamp.techcompare;
 
+import com.bootcamp.techcompare.model.CartItem;
 import com.bootcamp.techcompare.model.Review;
 import com.bootcamp.techcompare.model.Store;
+import com.bootcamp.techcompare.repository.CartItemRepository;
 import com.bootcamp.techcompare.repository.ReviewRepository;
 import com.bootcamp.techcompare.repository.StoreRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -38,12 +40,14 @@ public class TechcompareApplication {
 		return words[(int) (Math.random() * words.length)];
 	}
 
+	// Use this to generate random data for the database on EVERY application startup
 	@Bean
-	CommandLineRunner initDatabase(ReviewRepository reviewRepository, StoreRepository storeRepository) {
+	CommandLineRunner initDatabase(ReviewRepository reviewRepository, StoreRepository storeRepository, CartItemRepository cartItemRepository) {
 		return args -> {
 			for (int i = 0; i < 3; i++) {
 				reviewRepository.save(new Review("helinyi", generateRandomNumber(), generateRandomDouble(), generateRandomStringForComment()));
 				storeRepository.save(new Store(generateRandomStoreAddress()));
+				cartItemRepository.save(new CartItem("helinyi", generateRandomNumber(), generateRandomNumber()));
 			}
 		};
 	}
