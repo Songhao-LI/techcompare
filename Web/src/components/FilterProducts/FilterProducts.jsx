@@ -2,49 +2,29 @@ import React, {useState} from 'react';
 import FilteredProducts from "./FilteredProducts.jsx";
 
 const FilterProducts = () => {
-    const productCategories = ["electronics", "jewelery", "men's clothing", "women's clothing"]
+    const productCategories = ["","electronics", "jewelery", "men's clothing", "women's clothing"]
     const sortedCategories = productCategories.sort()
-    const [category, setCategory] = useState(sortedCategories[0]); // 默认选择第一个类别
-    const [keyword, setKeyword] = useState('');
-    const [submittedCategory, setSubmittedCategory] = useState(category)
+    const [submittedCategory, setSubmittedCategory] = useState(sortedCategories[0]); // 默认选择第一个类别
+    const [submittedKeyword, setSubmittedKeyword] = useState('');
+    const [currentCategory, setCurrentCategory] = useState('');
+    const [currentKeyword, setCurrentKeyword] = useState('');
     const handleCategoryChange = (event) => {
         const category = event.target.value;
-        setCategory(category);
+        setCurrentCategory(category);
     };
 
     const handleKeywordChange = (event) => {
         const keyword = event.target.value;
-        setKeyword(keyword)
+        setCurrentKeyword(keyword)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setSubmittedCategory(category);
-        // further api calls
-        const formData = new URLSearchParams({
-            category: category,
-            keyword: keyword,
-            // ids:
-        });
-        fetch(`/api/products?${formData}`, {
-            method: 'GET',
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('You have an error: ', error);
-            });
-
+        setSubmittedCategory(currentCategory)
+        setSubmittedKeyword(currentKeyword)
+        // setSubmittedCategory((prevCategory) => currentCategory !== prevCategory ? currentCategory : prevCategory + " ");
+        // setSubmittedKeyword((prevKeyword) => currentKeyword !== prevKeyword ? currentKeyword : prevKeyword + " ")
     };
-
-
 
 
     return (
@@ -61,7 +41,7 @@ const FilterProducts = () => {
                         Filter by Categories
                     </label>
                     <select
-                        value={category}
+                        value={currentCategory}
                         onChange={handleCategoryChange}
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     >
@@ -80,7 +60,7 @@ const FilterProducts = () => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         id="keyword"
-                        value={keyword}
+                        value={currentKeyword}
                         onChange={handleKeywordChange}
                         placeholder="Search products by keywords"/>
                 </div>
@@ -89,7 +69,7 @@ const FilterProducts = () => {
                     Submit
                 </button>
             </form>
-            <FilteredProducts category={submittedCategory}/>
+            <FilteredProducts category={submittedCategory} keyword={submittedKeyword}/>
         </>
 
     );

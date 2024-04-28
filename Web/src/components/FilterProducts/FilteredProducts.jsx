@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react';
 import Heading from "../Home/Shared/Heading.jsx";
 import Button from "../Home/Shared/Button.jsx";
 import { Link } from 'react-router-dom';
-const FilteredProducts = ({category}) => {
+const FilteredProducts = ({category, keyword}) => {
     const [ProductsData, setProductsData] = useState([]);
 
     useEffect(() => {
-        fetch(`https://fakestoreapi.com/products/category/${category}`)
+        fetch(`/api/products?categories=${category}&keyword=${keyword}`)
+
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -30,7 +31,7 @@ const FilteredProducts = ({category}) => {
             .catch(error => {
                 console.error('You have an error: ', error);
             });
-    }, [category]); // 空依赖数组保证了effect只在组件挂载时运行
+    }, [category, keyword]); // 空依赖数组保证了effect只在组件挂载时运行
 
     return (
         <div>
