@@ -17,7 +17,7 @@ package com.bootcamp.techcompare.model;
 
 public class PaymentRequest {
 
-        private int userId;
+        private String username;
 
         class PaymentDetails {
             private String cardNumber;
@@ -105,18 +105,18 @@ public class PaymentRequest {
 
         private Address billingAddress;
 
-        public PaymentRequest(int userId, PaymentDetails paymentDetails, Address billingAddress) {
-            this.userId = userId;
+        public PaymentRequest(String username, PaymentDetails paymentDetails, Address billingAddress) {
+            this.username = username;
             this.paymentDetails = paymentDetails;
             this.billingAddress = billingAddress;
         }
 
-        public int getUserId() {
-            return userId;
+        public String getUsername() {
+            return username;
         }
 
-        public void setUserId(int userId) {
-            this.userId = userId;
+        public void setUsername(String username) {
+            this.username = username;
         }
 
         public PaymentDetails getPaymentDetails() {

@@ -7,7 +7,6 @@ import com.bootcamp.techcompare.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -108,9 +107,9 @@ public class ProductController {
             description = "Get price trackers of a user.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = UserTrackerResponse.class)) )})})
-    @GetMapping(value = "/price-tracker/{userId}", produces = "application/json")
-    public ResponseEntity<List<UserTrackerResponse>> getPriceTrackings(@PathVariable String userId) {
-        List<Tracker> trackers = trackerService.getTrackersByUserId(userId);
+    @GetMapping(value = "/price-tracker/{username}", produces = "application/json")
+    public ResponseEntity<List<UserTrackerResponse>> getPriceTrackings(@PathVariable String username) {
+        List<Tracker> trackers = trackerService.getTrackersByUsername(username);
         // get current price for each product of trackers
         List<UserTrackerResponse> userTrackerResponses = trackers.stream()
                 .map(tracker -> {
@@ -161,8 +160,8 @@ public class ProductController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = { @Content(array = @ArraySchema(schema = @Schema(implementation = CartItem.class))) })})
     @GetMapping(value = "/cart-items", produces = "application/json")
-    public ResponseEntity<List<CartItem>> getCartItems(@RequestParam(value = "userId") String userId) {
-        List<CartItem> cartItems = productService.getCartItemsByUserId(userId);
+    public ResponseEntity<List<CartItem>> getCartItems(@RequestParam(value = "username") String username) {
+        List<CartItem> cartItems = productService.getCartItemsByUsername(username);
         return ResponseEntity.ok(cartItems);
     }
 
@@ -171,9 +170,9 @@ public class ProductController {
             description = "Update cart item quantity.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
-    @PutMapping(value = "/cart-items/{userId}/{productId}", produces = "application/json")
-    public ResponseEntity<String> updateCartItem(@PathVariable String userId, @PathVariable int productId, @RequestBody int newQuantity) {
-        productService.updateCartItem(userId, productId, newQuantity);
+    @PutMapping(value = "/cart-items/{username}/{productId}", produces = "application/json")
+    public ResponseEntity<String> updateCartItem(@PathVariable String username, @PathVariable int productId, @RequestBody int newQuantity) {
+        productService.updateCartItem(username, productId, newQuantity);
         return ResponseEntity.ok("Cart item updated successfully.");
     }
 
@@ -182,9 +181,9 @@ public class ProductController {
             description = "Remove cart item.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
-    @DeleteMapping(value = "/cart-items/{userId}/{productId}", produces = "application/json")
-    public ResponseEntity<String> removeCartItem(@PathVariable String userId, @PathVariable int productId) {
-        productService.removeCartItem(userId, productId);
+    @DeleteMapping(value = "/cart-items/{username}/{productId}", produces = "application/json")
+    public ResponseEntity<String> removeCartItem(@PathVariable String username, @PathVariable int productId) {
+        productService.removeCartItem(username, productId);
         return ResponseEntity.ok("Cart item removed successfully.");
     }
 

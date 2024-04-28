@@ -73,7 +73,7 @@ public class ProductService {
     public List<ProductReviewResponse> getRatingsByProductId(int productId) {
         List<Review> reviews = reviewDao.getReviewsByProductId(productId);
         return reviews.stream()
-                .map(review -> new ProductReviewResponse(review.getUserId(), review.getRate(), review.getComment()))
+                .map(review -> new ProductReviewResponse(review.getUsername(), review.getRate(), review.getComment()))
                 .collect(Collectors.toList());
     }
 
@@ -90,12 +90,12 @@ public class ProductService {
         cartItemDao.persist(cartItem);
     }
 
-    public List<CartItem> getCartItemsByUserId(String userId) {
-        return cartItemDao.getCartItemsByUserId(userId);
+    public List<CartItem> getCartItemsByUsername(String username) {
+        return cartItemDao.getCartItemsByUsername(username);
     }
 
-    public void updateCartItem(String userId, int productId, int newQuantity) {
-        List<CartItem> cartItems = cartItemDao.getCartItemsByUserId(userId);
+    public void updateCartItem(String username, int productId, int newQuantity) {
+        List<CartItem> cartItems = cartItemDao.getCartItemsByUsername(username);
         for (CartItem cartItem : cartItems) {
             if (cartItem.getProductId() == productId) {
                 cartItem.setQuantity(newQuantity);
@@ -105,8 +105,8 @@ public class ProductService {
         }
     }
 
-    public void removeCartItem(String userId, int productId) {
-        List<CartItem> cartItems = cartItemDao.getCartItemsByUserId(userId);
+    public void removeCartItem(String username, int productId) {
+        List<CartItem> cartItems = cartItemDao.getCartItemsByUsername(username);
         for (CartItem cartItem : cartItems) {
             if (cartItem.getProductId() == productId) {
                 cartItemDao.remove(cartItem);

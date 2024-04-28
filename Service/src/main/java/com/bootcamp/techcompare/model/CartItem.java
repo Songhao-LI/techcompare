@@ -1,6 +1,7 @@
 package com.bootcamp.techcompare.model;
 
 import jakarta.persistence.*;
+import software.amazon.awssdk.services.cognitoidentityprovider.endpoints.internal.Value;
 
 @Entity
 @Table(name = "cart_items")
@@ -9,22 +10,26 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int userId;
+    private String username;
 
     private int productId;
 
-    public CartItem(int userId, int productId, int quantity) {
-        this.userId = userId;
+    public CartItem(String username, int productId, int quantity) {
+        this.username = username;
         this.productId = productId;
         this.quantity = quantity;
     }
 
-    public int getUserId() {
-        return userId;
+    public CartItem() {
+
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getProductId() {

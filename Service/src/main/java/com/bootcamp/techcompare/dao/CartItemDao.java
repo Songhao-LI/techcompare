@@ -1,7 +1,6 @@
 package com.bootcamp.techcompare.dao;
 
 import com.bootcamp.techcompare.model.CartItem;
-import com.bootcamp.techcompare.model.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
@@ -18,9 +17,9 @@ public class CartItemDao {
         em.persist(cartItem);
     }
 
-    public List<CartItem> getCartItemsByUserId(String userId) {
-        return em.createQuery("SELECT c FROM CartItem c WHERE c.userId = :userId")
-                .setParameter("userId", userId)
+    public List<CartItem> getCartItemsByUsername(String username) {
+        return em.createQuery("SELECT c FROM CartItem c WHERE c.username = :username")
+                .setParameter("username", username)
                 .getResultList();
     }
 

@@ -21,9 +21,9 @@ public class TrackerDao {
         return em.createQuery("SELECT t FROM Tracker t").getResultList();
     }
 
-    public List<Tracker> getTrackersByUserId(String userId) {
-        return em.createQuery("SELECT t FROM Tracker t WHERE t.userId = :userId")
-                .setParameter("userId", userId)
+    public List<Tracker> getTrackersByUsername(String username) {
+        return em.createQuery("SELECT t FROM Tracker t WHERE t.username = :username")
+                .setParameter("username", username)
                 .getResultList();
     }
 }

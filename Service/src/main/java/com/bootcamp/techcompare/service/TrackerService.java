@@ -31,8 +31,8 @@ public class TrackerService {
         return trackerDao.getAllTracking();
     }
 
-    public List<Tracker> getTrackersByUserId(String userId) {
-        return trackerDao.getTrackersByUserId(userId);
+    public List<Tracker> getTrackersByUsername(String username) {
+        return trackerDao.getTrackersByUsername(username);
     }
 }
 

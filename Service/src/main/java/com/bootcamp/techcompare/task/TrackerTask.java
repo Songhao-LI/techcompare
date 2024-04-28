@@ -36,7 +36,7 @@ public class TrackerTask {
 
 //        TODO: implement the logic to send email to users
         for (Tracker tracker : trackers) {
-            log.info(tracker.getUserId() + "is tracking " + tracker.getProductId() + " at target price " + tracker.getTargetPrice());
+            log.info(tracker.getUsername() + "is tracking " + tracker.getProductId() + " at target price " + tracker.getTargetPrice());
         }
     }
 }
