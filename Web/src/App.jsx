@@ -9,6 +9,7 @@ import Register from "./components/Home/Popup/Register.jsx";
 import Login from "./components/Home/Popup/Login.jsx";
 import ProductDetail from "./components/ProductDetail/ProductDetail.jsx";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
+import Wishlist from "./components/Wishlist/Wishlist.jsx";
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -29,22 +30,24 @@ const App = () => {
     setConfirmPopup(!confirmPopup)
   }
 
-  return (
-    <Provider store={store}>
-      <HashRouter>
-        <Navbar handleOrderPopup={handleOrderPopup} handleLoginPopup={handleLoginPopup} />
-        <Register registerPopup={registerPopup} handleRegisterPopup={handleRegisterPopup} />
-        <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup} handleRegisterPopup={handleRegisterPopup} />
-        <Routes>
-          <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup}/>} />
-          <Route path="/FilterProducts" element={<FilterProducts />} />
-          <Route path="/ShoppingCart" element={<ShoppingCart handleOrderPopup={handleOrderPopup} />} />
-          <Route path="/ProductDetail/:productId" element={<ProductDetail />} />
-          {/* 其他路由 */}
-        </Routes>
-      </HashRouter>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <HashRouter>
+                <Navbar handleOrderPopup={handleOrderPopup} handleLoginPopup={handleLoginPopup}/>
+                <Register registerPopup={registerPopup} handleRegisterPopup={handleRegisterPopup}/>
+                <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup}
+                       handleRegisterPopup={handleRegisterPopup}/>
+                <Routes>
+                    <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup}/>}/>
+                    <Route path="/FilterProducts" element={<FilterProducts/>}/>
+                    <Route path="/ShoppingCart" element={<ShoppingCart handleOrderPopup={handleOrderPopup}/>}/>
+                    <Route path="/ProductDetail/:productId" element={<ProductDetail/>}/>
+                    <Route path="/Wishlist" element={<Wishlist/>}/>
+                    {/* 其他路由 */}
+                </Routes>
+            </HashRouter>
+        </Provider>
+    );
 };
 
 export default App;

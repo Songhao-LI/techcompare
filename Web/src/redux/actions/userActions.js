@@ -10,3 +10,4 @@ export const clearUser = () => {
         type: 'CLEAR_USER'
     };
 };
+

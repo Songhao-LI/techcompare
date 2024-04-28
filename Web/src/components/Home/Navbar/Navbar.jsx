@@ -157,14 +157,20 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
                       <div className="absolute z-[9999] hidden group-hover:block w-[200px] rounded-md bg-white shadow-md dark:bg-gray-900 p-2 dark:text-white ">
                         <ul className="space-y-2">
                           <li>
-                            <span className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                            <span
+                                className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
                               Account Info
                             </span>
-                            <span className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                            <span
+                                className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                              My Wishlist
+                            </span>
+                            <span
+                                className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
                               Settings
                             </span>
                             <span onClick={SignOut}
-                              className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                                  className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
                               Sign Out
                             </span>
                           </li>
@@ -176,7 +182,7 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
               </div>
             )}
             {!current_user.isLogin && (
-              <Button className="relative"
+                <Button className="relative"
                       text="Login"
                       bgColor={"bg-primary"}
                       textColor={"text-white"} handler={handleLoginPopup}

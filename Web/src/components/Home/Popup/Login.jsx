@@ -44,9 +44,9 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
       //     }
       // }
     };
-    const googleLogin = () => {
-        console.log('Google')
-    }
+    // const googleLogin = () => {
+    //     console.log('Google')
+    // }
 
     const createAccount = () => {
         // create an account
@@ -86,16 +86,16 @@ const Login = ({ loginPopup, handleLoginPopup, handleRegisterPopup }) => {
                                                     Sign In
                                                 </h3>
                                                 <p className="mb-4 text-slate-400">Enter your username and password</p>
-                                                <a onClick={googleLogin}
-                                                    className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-900 bg-green-200 dark:bg-slate-700 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300">
-                                                    <img className="h-5 mr-2"
-                                                         src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
-                                                         alt=""/>
-                                                    Sign in with Google
-                                                </a>
+                                                {/*<a onClick={googleLogin}*/}
+                                                {/*    className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-900 bg-green-200 dark:bg-slate-700 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300">*/}
+                                                {/*    <img className="h-5 mr-2"*/}
+                                                {/*         src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"*/}
+                                                {/*         alt=""/>*/}
+                                                {/*    Sign in with Google*/}
+                                                {/*</a>*/}
                                                 <div className="flex items-center mb-3">
                                                     <hr className="h-0 border-b border-solid border-grey-500 grow"/>
-                                                    <p className="mx-4 text-grey-600">or</p>
+                                                    {/*<p className="mx-4 text-grey-600">or</p>*/}
                                                     <hr className="h-0 border-b border-solid border-grey-500 grow"/>
                                                 </div>
                                                 <label htmlFor="username"

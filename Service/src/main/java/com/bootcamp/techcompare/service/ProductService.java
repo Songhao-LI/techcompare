@@ -8,6 +8,7 @@ import com.bootcamp.techcompare.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,6 +94,7 @@ public class ProductService {
         cartItemDao.persist(cartItem);
     }
 
+    @Transactional
     public void addToWishlist(WishlistItem wishlistItem) {
         wishlistItemDao.persist(wishlistItem);
     }
