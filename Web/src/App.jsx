@@ -38,7 +38,7 @@ const App = () => {
 
   const dispatch = useDispatch();
   React.useEffect(() => {
-    const fetchUserAndCartItems = async () => {
+    const init = async () => {
       try {
         const userResponse = await axios.get('/api/user/me');
 
@@ -74,8 +74,7 @@ const App = () => {
         console.error('Error fetching data: ', error);
       }
     };
-
-    fetchUserAndCartItems().then(() => {
+    init().then(() => {
     });
 
     AOS.init({
