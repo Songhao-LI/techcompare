@@ -21,13 +21,14 @@ public class CartItemDao {
     @Transactional
     public void persist(CartItem cartItem) {
         // If the cart item already exists, update the quantity
-        CartItem existingCartItem = em.find(CartItem.class, Pair.of(cartItem.getUsername(), cartItem.getProductId()));
-        if (existingCartItem != null) {
-            existingCartItem.setQuantity(existingCartItem.getQuantity() + cartItem.getQuantity());
-            em.merge(existingCartItem);
-        } else {
-            em.persist(cartItem);
+        for (CartItem item : getCartItemsByUsername(cartItem.getUsername())) {
+            if (item.getProductId() == cartItem.getProductId()) {
+                item.setQuantity(item.getQuantity() + cartItem.getQuantity());
+                em.merge(item);
+                return;
+            }
         }
+        em.persist(cartItem);
     }
 
     public List<CartItem> getCartItemsByUsername(String username) {
