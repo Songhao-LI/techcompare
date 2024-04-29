@@ -16,11 +16,12 @@ const ProductCard = ({ confirmPopup, handleConfirmPopup, data }) => {
       // Item exists, so update its quantity
       const newQuantity = existingItem.quantity + 1;
       try {
-        await axios.put(`/api/cart-items/${current_user.username}/${item.id}`, JSON.stringify(newQuantity), {
+        const response = await axios.put(`/api/cart-items/${current_user.username}/${item.id}`, JSON.stringify(newQuantity), {
           headers: {
             'Content-Type': 'application/json'
           }
         })
+        console.log(response)
         dispatch({
           type: 'UPDATE_QUANTITY',
           payload: { id: existingItem.id, quantity: newQuantity }
@@ -38,11 +39,12 @@ const ProductCard = ({ confirmPopup, handleConfirmPopup, data }) => {
         price: item.price
       };
       try {
-        await axios.post('/api/cart-items', {
+        const response = await axios.post('/api/cart-items', {
           username: current_user.username,
           productId: child.id,
           quantity: 1
         });
+        console.log(response)
         dispatch(addToCart(child));
       } catch (error) {
         console.error('Error adding to cart:', error);

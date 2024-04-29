@@ -1,10 +1,10 @@
 import React from "react";
 import AOS from "aos";
+import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {AiOutlineFileExcel} from "react-icons/ai"
 import {Link} from "react-router-dom";
-import axios from "axios";
-import {setUser} from "../../redux/actions/userActions";
+import {clearCart} from "../../redux/actions/cartActions";
 
 const ShoppingCart = (handleOrderPopup) => {
   const current_user = useSelector(state => state.user.currentUser);
@@ -25,14 +25,18 @@ const ShoppingCart = (handleOrderPopup) => {
   }, []);
 
   const handleCheck = async () => {
-    const checkoutUrl = 'https://buy.stripe.com/test_4gw6p8cEA8555nW7st';
+    // const checkoutUrl = 'https://buy.stripe.com/test_4gw6p8cEA8555nW7st';
     try {
         const response = await axios.post('/api/checkout', {
           username: current_user.username,
           userEmail: current_user.email
         });
-        // const response = await axios.get('/api/test_checkout');
+        const clear_res = await axios.post(`/api/clear-cart/${current_user.username}`, {
+          username: current_user.username
+        });
+        console.log(clear_res)
         console.log('checkout successful:', response);
+        dispatch(clearCart());
         window.location.href = response.data;
     } catch (error) {
         if (error.response) {

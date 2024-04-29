@@ -52,6 +52,7 @@ const App = () => {
         const cartItemsResponse = await axios.get('/api/cart-items', {
           params: { username: username }
         });
+        console.log(cartItemsResponse)
 
         const productDetailsPromises = cartItemsResponse.data.map(item =>
           axios.get(`/api/products/${item.productId}`)
