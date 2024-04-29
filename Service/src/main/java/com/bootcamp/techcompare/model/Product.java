@@ -1,5 +1,6 @@
 package com.bootcamp.techcompare.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,34 @@ public class Product {
     private String category;
     private String imageLink;
 //    private Review review;
+    @Column(nullable = true)
+    private double rate;
+    @Column(nullable = true)
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
 
     public Product(){}
 

@@ -76,12 +76,12 @@ const ProductDetail = () => {
                                 <div className="mr-4">
                                     <span className="font-bold text-gray-700 dark:text-gray-300 text-lg">Rating: </span>
                                     <span
-                                        className="text-gray-600 dark:text-gray-300 text-lg">{productDetails.rating.rate}</span>
+                                        className="text-gray-600 dark:text-gray-300 text-lg">{productDetails.rate}</span>
                                 </div>
                                 <div>
                                     <span className="font-bold text-gray-700 dark:text-gray-300 text-lg">Count: </span>
                                     <span
-                                        className="text-gray-600 dark:text-gray-300 text-lg">{productDetails.rating.count}</span>
+                                        className="text-gray-600 dark:text-gray-300 text-lg">{productDetails.count}</span>
                                 </div>
                             </div>
 
