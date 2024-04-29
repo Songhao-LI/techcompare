@@ -32,6 +32,7 @@ const cartReducer = (state = initialState, action) => {
         shoppingCart: state.shoppingCart.filter(item => item.id !== action.payload)
       };
     case 'UPDATE_QUANTITY':
+      console.log(action)
       return {
         ...state,
         shoppingCart: state.shoppingCart.map(item =>

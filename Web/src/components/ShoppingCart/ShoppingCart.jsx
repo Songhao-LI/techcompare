@@ -12,6 +12,7 @@ const ShoppingCart = (handleOrderPopup) => {
   const shippingCost = shoppingCart.length > 0 ? 4.99 : 0.00;
   const dispatch = useDispatch();
   console.log(current_user)
+  console.log(shoppingCart)
 
   React.useEffect(() => {
     AOS.init({
@@ -26,11 +27,11 @@ const ShoppingCart = (handleOrderPopup) => {
   const handleCheck = async () => {
     const checkoutUrl = 'https://buy.stripe.com/test_4gw6p8cEA8555nW7st';
     try {
-        // const response = await axios.post('/api/checkout', {
-        //   username: current_user.username,
-        //   userEmail: current_user.email
-        // });
-        const response = await axios.get('/api/test_checkout');
+        const response = await axios.post('/api/checkout', {
+          username: current_user.username,
+          userEmail: current_user.email
+        });
+        // const response = await axios.get('/api/test_checkout');
         console.log('checkout successful:', response);
         window.location.href = response.data;
     } catch (error) {
@@ -55,6 +56,12 @@ const ShoppingCart = (handleOrderPopup) => {
   const handleQuantityChange = (item, delta) => {
     const newQuantity = item.quantity + delta;
     if (newQuantity > 0) {
+      const response = axios.put(`/api/cart-items/${current_user.username}/${item.id}`, JSON.stringify(newQuantity), {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      console.log(response)
       dispatch({
         type: 'UPDATE_QUANTITY',
         payload: { id: item.id, quantity: newQuantity }

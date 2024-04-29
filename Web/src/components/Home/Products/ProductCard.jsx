@@ -10,19 +10,21 @@ const ProductCard = ({ confirmPopup, handleConfirmPopup, data }) => {
   const shoppingCart = useSelector(state => state.cart.shoppingCart);
 
   const addToCartHandler = async (item) => {
-    // Check if the item is already in the cart
     const existingItem = shoppingCart.find(cartItem => cartItem.id === item.id);
-    console.log(existingItem)
 
     if (existingItem) {
       // Item exists, so update its quantity
       const newQuantity = existingItem.quantity + 1;
       try {
-        const response = await axios.put(`/api/cart-items/${current_user.username}/${item.id}`, {
-          quantity: newQuantity
+        await axios.put(`/api/cart-items/${current_user.username}/${item.id}`, JSON.stringify(newQuantity), {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        dispatch({
+          type: 'UPDATE_QUANTITY',
+          payload: { id: existingItem.id, quantity: newQuantity }
         });
-        console.log('Updated cart item successfully:', response.data);
-        dispatch(updateQuantity({...existingItem, quantity: newQuantity}));
       } catch (error) {
         console.error('Error updating cart item:', error);
       }
@@ -36,12 +38,11 @@ const ProductCard = ({ confirmPopup, handleConfirmPopup, data }) => {
         price: item.price
       };
       try {
-        const response = await axios.post('/api/cart-items', {
+        await axios.post('/api/cart-items', {
           username: current_user.username,
           productId: child.id,
           quantity: 1
         });
-        console.log('Added to cart successfully:', response.data);
         dispatch(addToCart(child));
       } catch (error) {
         console.error('Error adding to cart:', error);

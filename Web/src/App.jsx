@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import store from './redux/store';
 import {BrowserRouter, Routes, Route, HashRouter} from "react-router-dom";
 import { Provider, useDispatch } from 'react-redux';
 import Home from "./components/Home/Home.jsx";
@@ -54,8 +53,6 @@ const App = () => {
           params: { username: username }
         });
 
-        console.log(userResponse.data);
-        console.log(cartItemsResponse.data);
         const productDetailsPromises = cartItemsResponse.data.map(item =>
           axios.get(`/api/products/${item.productId}`)
         );
@@ -68,7 +65,6 @@ const App = () => {
           title: response.data.title,
           price: response.data.price
         }));
-        console.log(products);
         dispatch(setCart(products));
       } catch (error) {
         console.error('Error fetching data: ', error);

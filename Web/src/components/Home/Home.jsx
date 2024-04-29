@@ -15,11 +15,8 @@ import Toast from "./Shared/Toast";
 import Confirm from "./Popup/Confirm";
 import headphone from "../../assets/hero/headphone.png";
 import smartwatch2 from "../../assets/category/smartwatch2-removebg-preview.png";
-
 import AOS from "aos";
 import "aos/dist/aos.css";
-import axios from "axios";
-import {setCart} from "../../redux/actions/cartActions";
 
 const BannerData = {
     discount: "30% OFF",
