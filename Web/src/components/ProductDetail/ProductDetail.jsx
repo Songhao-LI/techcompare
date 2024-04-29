@@ -1,12 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import React, {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
 import ProductReviews from "./ProductReviews.jsx";
+import StoreMap from "./StoreMap.jsx";
 import axios from "axios";
 import {useSelector} from "react-redux";
+
 
 const ProductDetail = () => {
     const {productId} = useParams();
     const [productDetails, setProductDetails] = useState(null);
+    const [stores, setStores] = useState([]);
+    const [showMap, setShowMap] = useState(true);
     const [error, setError] = useState('');
     const currentUser = useSelector((state) => state.user.currentUser);
 
@@ -25,6 +29,59 @@ const ProductDetail = () => {
             }).catch(error => {
             setError(error.message);
         });
+
+        // fetch(`/api/products/${productId}/stores`)
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         setStores(data);
+        //     }).catch(error => {
+        //     setError(error.message);
+        // });
+
+        axios.get(`/api/products/${productId}/stores`)
+            .then(response => {
+                const storeData = response.data;
+
+                if (storeData.length === 0) {
+                    // No stores available, handle accordingly
+                    setStores([]);  // Set state or handle appropriately
+                    setShowMap(false);  // Set a flag to hide the map component if desired
+                    return;
+                }
+
+                // Map storeData to include coordinates using Nominatim geocoding
+                const geocodedStoresPromises = storeData.map(store => {
+                    return axios.get(`https://nominatim.openstreetmap.org/search`, {
+                        params: {
+                            q: store.location,
+                            format: 'json'
+                        }
+                    }).then(response => {
+                        const [result] = response.data; // Get first geocoding result
+                        if (response.data.length == 0) {  // If no valid result found
+                            return { ...store, lat: null, lon: null };
+                        }
+                        return {
+                            ...store,
+                            lat: result.lat,
+                            lon: result.lon
+                        };
+                    });
+                });
+
+                // Wait for all geocoding promises to resolve
+                Promise.all(geocodedStoresPromises).then(geocodedStores => {
+                    setStores(geocodedStores);
+                });
+            })
+            .catch(error => {
+                setError(error.message);
+            });
     }, [productId]);
 
     if (error) {
@@ -51,15 +108,19 @@ const ProductDetail = () => {
             <div className="bg-gray-100 dark:bg-gray-800 py-8">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row -mx-4">
+                        {/* Product details */}
                         <div className="md:flex-1 px-4">
+                            {/* Product Image */}
                             <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
                                 <img className="w-full h-full object-contain" src={productDetails.image}
                                      alt="Product Image"/>
                             </div>
-
                         </div>
+
+                        {/* Product Info */}
                         <div className="md:flex-1 px-4">
                             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{productDetails.title}</h2>
+                            {/* Price, Availability, Rating */}
                             <div className="flex mb-4">
                                 <div className="mr-4">
                                     <span className="font-bold text-gray-700 dark:text-gray-300 text-lg">Price: </span>
@@ -72,6 +133,7 @@ const ProductDetail = () => {
                                     <span className="text-gray-600 dark:text-gray-300 text-lg">In Stock</span>
                                 </div>
                             </div>
+                            {/* Rating, Count */}
                             <div className="flex mb-4">
                                 <div className="mr-4">
                                     <span className="font-bold text-gray-700 dark:text-gray-300 text-lg">Rating: </span>
@@ -85,7 +147,7 @@ const ProductDetail = () => {
                                 </div>
                             </div>
 
-
+                            {/* Description */}
                             <div>
                             <span
                                 className="font-bold text-gray-700 dark:text-gray-300 text-lg">Product Description:</span>
@@ -94,6 +156,8 @@ const ProductDetail = () => {
                                 </p>
                             </div>
                             <br/>
+
+                            {/* Action buttons */}
                             <div className="flex -mx-2 mb-4">
                                 <div className="w-1/2 px-2">
                                     <button
@@ -108,6 +172,20 @@ const ProductDetail = () => {
                                     </button>
                                 </div>
                             </div>
+
+                            {/* Section for stores */}
+                            <div class="storeList">
+                                <h3 className="font-bold text-lg">Stores:</h3>
+                                <ul className="list-disc list-inside">
+                                    {stores.map(store => (
+                                        <li key={store.id}>
+                                            {store.location}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            {/* Section for storemap */}
+                            {showMap && <StoreMap stores={stores} />}
                         </div>
                     </div>
                 </div>
