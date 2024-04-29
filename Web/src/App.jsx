@@ -10,6 +10,7 @@ import Login from "./components/Home/Popup/Login.jsx";
 import ProductDetail from "./components/ProductDetail/ProductDetail.jsx";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Wishlist from "./components/Wishlist/Wishlist.jsx";
+import Compare from "./components/Compare/Compare.jsx";
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -43,6 +44,7 @@ const App = () => {
                     <Route path="/ShoppingCart" element={<ShoppingCart handleOrderPopup={handleOrderPopup}/>}/>
                     <Route path="/ProductDetail/:productId" element={<ProductDetail/>}/>
                     <Route path="/Wishlist" element={<Wishlist/>}/>
+                    <Route path="/Compare" element={<Compare/>}/>
                     {/* 其他路由 */}
                 </Routes>
             </HashRouter>
