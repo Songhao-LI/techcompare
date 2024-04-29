@@ -1,15 +1,20 @@
 package com.bootcamp.techcompare.model;
 
-import java.net.URL;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "products")
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
     private double price;
     private String description;
     private String category;
-    private URL image;
-    private Review review;
+    private String imageLink;
+//    private Review review;
 
     public Product(){}
 
@@ -53,19 +58,19 @@ public class Product {
         this.category = category;
     }
 
-    public URL getImage() {
-        return image;
+    public String getImage() {
+        return imageLink;
     }
 
-    public void setImage(URL image) {
-        this.image = image;
+    public void setImage(String imageLink) {
+        this.imageLink = imageLink;
     }
 
-    public Review getRating() {
-        return review;
-    }
-
-    public void setRating(Review review) {
-        this.review = review;
-    }
+//    public Review getRating() {
+//        return review;
+//    }
+//
+//    public void setRating(Review review) {
+//        this.review = review;
+//    }
 }

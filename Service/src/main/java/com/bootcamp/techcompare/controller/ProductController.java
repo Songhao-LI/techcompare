@@ -45,6 +45,16 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
+@Operation(
+            summary = "Get all categories.",
+            description = "Get all categories.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = String.class))))})
+    @GetMapping(value="/product_categories", produces = "application/json")
+    public ResponseEntity<List<String>> getCategories() {
+        return ResponseEntity.ok(productService.fetchCategories());
+    }
+
     @Operation(
             summary = "Get product by id.",
             description = "Get product by id.")
