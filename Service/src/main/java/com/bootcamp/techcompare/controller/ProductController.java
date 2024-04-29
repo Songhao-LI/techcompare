@@ -4,6 +4,7 @@ import com.bootcamp.techcompare.model.*;
 import com.bootcamp.techcompare.service.ProductService;
 import com.bootcamp.techcompare.service.TrackerService;
 import com.bootcamp.techcompare.service.UserService;
+import com.bootcamp.techcompare.utils.ResponseMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -83,11 +84,11 @@ public class ProductController {
             summary = "Add review and rating for a product.",
             description = "Add review and rating for a product.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ResponseMessage.class)) })})
     @PostMapping(value = "/reviews", produces = "application/json")
-    public ResponseEntity<String> addReview(@RequestBody Review review) {
+    public ResponseEntity<ResponseMessage> addReview(@RequestBody Review review) {
         productService.addRating(review);
-        return ResponseEntity.ok("Review added successfully.");
+        return ResponseEntity.ok(new ResponseMessage("Review added successfully."));
     }
 
     @Operation(
@@ -117,11 +118,11 @@ public class ProductController {
             summary = "Track product for a user at a specific price.",
             description = "Track product for a user at a specific price.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ResponseMessage.class)) })})
     @PostMapping(value = "/price-tracker", produces = "application/json")
-    public ResponseEntity<String> trackPrice(@RequestBody Tracker tracker) {
+    public ResponseEntity<ResponseMessage> trackPrice(@RequestBody Tracker tracker) {
         trackerService.add(tracker);
-        return ResponseEntity.ok("Price tracker set successfully.");
+        return ResponseEntity.ok(new ResponseMessage("Price tracker set successfully."));
     }
 
     @Operation(
@@ -169,11 +170,11 @@ public class ProductController {
             summary = "Add product to cart.",
             description = "Add product to cart.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ResponseMessage.class)) })})
     @PostMapping(value = "/cart-items", produces = "application/json")
-    public ResponseEntity<String> addToCart(@RequestBody CartItem cartItem) {
+    public ResponseEntity<ResponseMessage> addToCart(@RequestBody CartItem cartItem) {
         productService.addToCart(cartItem);
-        return ResponseEntity.ok("Product added to cart successfully.");
+        return ResponseEntity.ok(new ResponseMessage("Product added to cart successfully."));
     }
 
     @Operation(
@@ -191,46 +192,46 @@ public class ProductController {
             summary = "Update cart item quantity.",
             description = "Update cart item quantity.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ResponseMessage.class)) })})
     @PutMapping(value = "/cart-items/{username}/{productId}", produces = "application/json")
-    public ResponseEntity<String> updateCartItem(@PathVariable String username, @PathVariable int productId, @RequestBody int newQuantity) {
+    public ResponseEntity<ResponseMessage> updateCartItem(@PathVariable String username, @PathVariable int productId, @RequestBody int newQuantity) {
         productService.updateCartItem(username, productId, newQuantity);
-        return ResponseEntity.ok("Cart item updated successfully.");
+        return ResponseEntity.ok(new ResponseMessage("Cart item updated successfully."));
     }
 
     @Operation(
             summary = "Clear cart of a user.",
             description = "Clear cart of a user.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ResponseMessage.class)) })})
     @PostMapping(value = "/clear-cart/{username}", produces = "application/json")
-    public ResponseEntity<String> clearCartItems(@PathVariable String username) {
+    public ResponseEntity<ResponseMessage> clearCartItems(@PathVariable String username) {
         productService.clearCartItems(username);
-        return ResponseEntity.ok("Cart items updated successfully.");
+        return ResponseEntity.ok(new ResponseMessage("Cart items updated successfully."));
     }
 
     @Operation(
             summary = "Remove cart item.",
             description = "Remove cart item.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ResponseMessage.class)) })})
     @DeleteMapping(value = "/cart-items/{username}/{productId}", produces = "application/json")
-    public ResponseEntity<String> removeCartItem(@PathVariable String username, @PathVariable int productId) {
+    public ResponseEntity<ResponseMessage> removeCartItem(@PathVariable String username, @PathVariable int productId) {
         productService.removeCartItem(username, productId);
-        return ResponseEntity.ok("Cart item removed successfully.");
+        return ResponseEntity.ok(new ResponseMessage("Cart item removed successfully."));
     }
 
     @Operation(
             summary = "Add product to wishlist.",
             description = "Add product to wishlist.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ResponseMessage.class)) })})
     @PostMapping(value = "/wishlist-items", produces = "application/json")
-    public ResponseEntity<String> addToWishlist(@RequestBody WishlistItem wishlistItem) {
+    public ResponseEntity<ResponseMessage> addToWishlist(@RequestBody WishlistItem wishlistItem) {
 //    public ResponseEntity<String> addToWishlist(@RequestParam(value = "username") String username, @RequestParam(value = "productId") int productId) {
         productService.addToWishlist(wishlistItem);
 //        productService.addToWishlist(new WishlistItem(username, productId));
-        return ResponseEntity.ok("Product added to wishlist successfully.");
+        return ResponseEntity.ok(new ResponseMessage("Product added to wishlist successfully."));
     }
 
     @Operation(
@@ -248,10 +249,10 @@ public class ProductController {
             summary = "Remove wishlist item.",
             description = "Remove wishlist item.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ResponseMessage.class)) })})
     @DeleteMapping(value = "/wishlist-items/{username}/{productId}", produces = "application/json")
-    public ResponseEntity<String> removeWishlistItem(@PathVariable String username, @PathVariable int productId) {
+    public ResponseEntity<ResponseMessage> removeWishlistItem(@PathVariable String username, @PathVariable int productId) {
         productService.removeWishlistItem(username, productId);
-        return ResponseEntity.ok("Wishlist item removed successfully.");
+        return ResponseEntity.ok(new ResponseMessage("Wishlist item removed successfully."));
     }
 }
