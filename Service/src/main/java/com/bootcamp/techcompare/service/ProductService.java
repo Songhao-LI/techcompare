@@ -1,9 +1,6 @@
 package com.bootcamp.techcompare.service;
 
-import com.bootcamp.techcompare.dao.CartItemDao;
-import com.bootcamp.techcompare.dao.ReviewDao;
-import com.bootcamp.techcompare.dao.StoreDao;
-import com.bootcamp.techcompare.dao.WishlistItemDao;
+import com.bootcamp.techcompare.dao.*;
 import com.bootcamp.techcompare.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +23,9 @@ public class ProductService {
 
     @Autowired
     private StoreDao storeDao;
+
+    @Autowired
+    private StoreProductDao storeProductDao;
 
     @Autowired
     private CartItemDao cartItemDao;
@@ -140,6 +140,10 @@ public class ProductService {
 
     public void placeOrder(PaymentRequest paymentRequest) {
 //        TODO: Implement this method
+    }
+
+    public List<Store> getStoresByProductId(int productId) {
+        return storeProductDao.getStoresByProductId(productId);
     }
 }
 

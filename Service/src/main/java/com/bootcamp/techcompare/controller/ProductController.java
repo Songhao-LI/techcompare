@@ -92,6 +92,18 @@ public class ProductController {
     }
 
     @Operation(
+            summary = "Get stores of a product.",
+            description = "Get stores of a product.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(array = @ArraySchema(schema = @Schema(implementation = Store.class))) })})
+    @GetMapping(value = "/products/{productId}/stores", produces = "application/json")
+    public ResponseEntity<List<Store>> getStoresByProductId(@PathVariable int productId) {
+        System.out.println("productId: " + productId);
+        List<Store> stores = productService.getStoresByProductId(productId);
+        return ResponseEntity.ok(stores);
+    }
+
+    @Operation(
             summary = "Track product for a user at a specific price.",
             description = "Track product for a user at a specific price.")
     @ApiResponses({
