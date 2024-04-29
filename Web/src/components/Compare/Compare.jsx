@@ -61,7 +61,7 @@ const Compare = () => {
                             <p className="bg-red-600 text-white h-12 text-center px-2 flex items-center justify-center border-t border-gray-300">{product.title}</p>
                             <p className="text-gray-600 text-center h-12 flex items-center justify-center">{product.category}</p>
                             <p className="bg-red-600 text-white text-center h-12 flex items-center justify-center">${product.price}</p>
-                            <p className="text-gray-600 text-center h-12 flex items-center justify-center">{product.rating.rate}</p>
+                            <p className="text-gray-600 text-center h-12 flex items-center justify-center">{product.rate}</p>
                             <Link to={`/ProductDetail/${product.id}`}>
                                 <a href="#"
                                    className="bg-red-600 text-white text-center h-12 flex items-center justify-center">See
