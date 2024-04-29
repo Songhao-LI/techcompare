@@ -38,7 +38,7 @@ const App = () => {
                 <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup}
                        handleRegisterPopup={handleRegisterPopup}/>
                 <Routes>
-                    <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup}/>}/>
+                    <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup}/>}/>
                     <Route path="/FilterProducts" element={<FilterProducts/>}/>
                     <Route path="/ShoppingCart" element={<ShoppingCart handleOrderPopup={handleOrderPopup}/>}/>
                     <Route path="/ProductDetail/:productId" element={<ProductDetail/>}/>

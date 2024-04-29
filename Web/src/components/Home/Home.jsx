@@ -82,7 +82,7 @@ const Home = ({ handleOrderPopup, orderPopup, handleConfirmPopup, confirmPopup})
           <Partners />
           <Footer />
           <Popup orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />
-          <Confirm confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup}></Confirm>
+          <Confirm confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup} />
         </div>
     );
 };
