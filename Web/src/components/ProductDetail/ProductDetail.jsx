@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 const ProductDetail = () => {
     const {productId} = useParams();
     const [productDetails, setProductDetails] = useState(null);
+    const [stores, setStores] = useState([]);
     const [error, setError] = useState('');
     const currentUser = useSelector((state) => state.user.currentUser);
 
@@ -22,6 +23,19 @@ const ProductDetail = () => {
                 setProductDetails(data);
                 console.log(data);
                 console.log(currentUser);
+            }).catch(error => {
+            setError(error.message);
+        });
+
+        fetch(`/api/products/${productId}/stores`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setStores(data);
             }).catch(error => {
             setError(error.message);
         });
@@ -51,15 +65,19 @@ const ProductDetail = () => {
             <div className="bg-gray-100 dark:bg-gray-800 py-8">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row -mx-4">
+                        {/* Product details */}
                         <div className="md:flex-1 px-4">
+                            {/* Product Image */}
                             <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
                                 <img className="w-full h-full object-contain" src={productDetails.image}
                                      alt="Product Image"/>
                             </div>
-
                         </div>
+
+                        {/* Product Info */}
                         <div className="md:flex-1 px-4">
                             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{productDetails.title}</h2>
+                            {/* Price, Availability, Rating */}
                             <div className="flex mb-4">
                                 <div className="mr-4">
                                     <span className="font-bold text-gray-700 dark:text-gray-300 text-lg">Price: </span>
@@ -72,6 +90,7 @@ const ProductDetail = () => {
                                     <span className="text-gray-600 dark:text-gray-300 text-lg">In Stock</span>
                                 </div>
                             </div>
+                            {/* Rating, Count */}
                             <div className="flex mb-4">
                                 <div className="mr-4">
                                     <span className="font-bold text-gray-700 dark:text-gray-300 text-lg">Rating: </span>
@@ -85,7 +104,7 @@ const ProductDetail = () => {
                                 </div>
                             </div>
 
-
+                            {/* Description */}
                             <div>
                             <span
                                 className="font-bold text-gray-700 dark:text-gray-300 text-lg">Product Description:</span>
@@ -94,6 +113,8 @@ const ProductDetail = () => {
                                 </p>
                             </div>
                             <br/>
+
+                            {/* Action buttons */}
                             <div className="flex -mx-2 mb-4">
                                 <div className="w-1/2 px-2">
                                     <button
@@ -107,6 +128,18 @@ const ProductDetail = () => {
                                         to Wishlist
                                     </button>
                                 </div>
+                            </div>
+
+                            {/* Section for stores */}
+                            <div class="storeList">
+                                <h3 className="font-bold text-lg">Stores:</h3>
+                                <ul className="list-disc list-inside">
+                                    {stores.map(store => (
+                                        <li key={store.id}>
+                                            {store.location}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         </div>
                     </div>
