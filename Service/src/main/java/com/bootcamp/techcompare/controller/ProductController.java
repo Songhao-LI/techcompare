@@ -199,6 +199,17 @@ public class ProductController {
     }
 
     @Operation(
+            summary = "Clear cart of a user.",
+            description = "Clear cart of a user.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
+    @PostMapping(value = "/clear-cart", produces = "application/json")
+    public ResponseEntity<String> clearCartItems(@PathVariable String username) {
+        productService.clearCartItems(username);
+        return ResponseEntity.ok("Cart items updated successfully.");
+    }
+
+    @Operation(
             summary = "Remove cart item.",
             description = "Remove cart item.")
     @ApiResponses({

@@ -26,6 +26,7 @@ public class WishlistItemDao {
                 .getResultList();
     }
 
+    @Transactional
     public void remove(WishlistItem wishlistItem) {
         em.remove(wishlistItem);
     }

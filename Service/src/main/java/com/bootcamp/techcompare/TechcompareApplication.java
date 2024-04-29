@@ -47,9 +47,9 @@ public class TechcompareApplication {
 	CommandLineRunner initDatabase(ReviewRepository reviewRepository, StoreRepository storeRepository, CartItemRepository cartItemRepository, StoreProductRepository storeProductRepository) {
 		return args -> {
 			for (int i = 0; i < 1; i++) {
-				reviewRepository.save(new Review("helinyi", generateRandomNumber(), generateRandomDouble(), generateRandomStringForComment()));
-				storeRepository.save(new Store(generateRandomStoreAddress()));
-				cartItemRepository.save(new CartItem("helinyi", generateRandomNumber(), generateRandomNumber()));
+//				reviewRepository.save(new Review("helinyi", generateRandomNumber(), generateRandomDouble(), generateRandomStringForComment()));
+//				storeRepository.save(new Store(generateRandomStoreAddress()));
+//				cartItemRepository.save(new CartItem("helinyi", generateRandomNumber(), generateRandomNumber()));
 			}
 
 //			for (int i = 0; i < 50; i++) {

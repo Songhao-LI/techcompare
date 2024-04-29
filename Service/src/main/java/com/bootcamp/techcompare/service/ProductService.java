@@ -96,6 +96,7 @@ public class ProductService {
 
     public void addToCart(CartItem cartItem) {
         cartItemDao.persist(cartItem);
+        cartItemDao.merge();
     }
 
     @Transactional
@@ -104,6 +105,7 @@ public class ProductService {
     }
 
     public List<CartItem> getCartItemsByUsername(String username) {
+        cartItemDao.merge();
         return cartItemDao.getCartItemsByUsername(username);
     }
 
@@ -112,11 +114,16 @@ public class ProductService {
     }
 
     public void updateCartItem(String username, int productId, int newQuantity) {
+        cartItemDao.merge();
         List<CartItem> cartItems = cartItemDao.getCartItemsByUsername(username);
         for (CartItem cartItem : cartItems) {
-            if (cartItem.getProductId() == productId) {
+            if (cartItem.getProductId() == productId && cartItem.getUsername().equals(username)) {
                 cartItem.setQuantity(newQuantity);
-                cartItemDao.persist(cartItem);
+                if (newQuantity == 0) {
+                    cartItemDao.remove(cartItem);
+                } else {
+                    cartItemDao.persist(cartItem);
+                }
                 break;
             }
         }
@@ -125,10 +132,8 @@ public class ProductService {
     public void removeCartItem(String username, int productId) {
         List<CartItem> cartItems = cartItemDao.getCartItemsByUsername(username);
         for (CartItem cartItem : cartItems) {
-            if (cartItem.getProductId() == productId) {
-                cartItemDao.remove(cartItem);
-                break;
-            }
+            if (cartItem.getProductId() == productId && cartItem.getUsername().equals(username)) {
+                cartItemDao.remove(cartItem);}
         }
     }
 
@@ -148,6 +153,13 @@ public class ProductService {
 
     public List<Store> getStoresByProductId(int productId) {
         return storeProductDao.getStoresByProductId(productId);
+    }
+
+    public void clearCartItems(String username) {
+        List<CartItem> cartItems = cartItemDao.getCartItemsByUsername(username);
+        for (CartItem cartItem : cartItems) {
+            cartItemDao.remove(cartItem);
+        }
     }
 }
 
