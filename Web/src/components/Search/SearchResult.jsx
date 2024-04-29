@@ -28,7 +28,7 @@ const SearchResult = () => {
         const fuse = new Fuse(response.data, {
           keys: ['title', 'description'], // fields to index for searching
           includeScore: true,
-          threshold: 0.9
+          threshold: 0.4
         });
         const result = fuse.search(query);
         setProducts(result.map(item => item.item));

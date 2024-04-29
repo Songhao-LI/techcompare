@@ -19,6 +19,7 @@ import smartwatch2 from "../../assets/category/smartwatch2-removebg-preview.png"
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
+import {setCart} from "../../redux/actions/cartActions";
 
 const BannerData = {
     discount: "30% OFF",
@@ -46,25 +47,53 @@ const BannerData2 = {
 const Home = ({ handleOrderPopup, orderPopup, handleConfirmPopup, confirmPopup}) => {
     const dispatch = useDispatch();
     React.useEffect(() => {
-      axios.get('/api/user/me')
-        .then(response => {
-          console.log(response.data);
+      const fetchUserAndCartItems = async () => {
+        try {
+          const userResponse = await axios.get('/api/user/me');
+
           dispatch(setUser({
-            username: response.data.principal.userInfo.claims.username,
-            email: response.data.principal.email,
-            password: response.data.principal.password,
-            phoneNumber: response.data.principal.phoneNumber
+            username: userResponse.data.principal.userInfo.claims.username,
+            email: userResponse.data.principal.email,
+            password: userResponse.data.principal.password,
+            phoneNumber: userResponse.data.principal.phoneNumber
           }));
-        })
-        .catch(error => {
+
+          const username = userResponse.data.principal.userInfo.claims.username;
+          const cartItemsResponse = await axios.get('/api/cart-items', {
+            params: { username: username }
+          });
+
+          console.log(userResponse.data);
+          console.log(cartItemsResponse.data);
+          const productDetailsPromises = cartItemsResponse.data.map(item =>
+            axios.get(`/api/products/${item.productId}`)
+          );
+
+          const productDetailsResponses = await Promise.all(productDetailsPromises);
+          const products = productDetailsResponses.map((response, index) => ({
+            id: cartItemsResponse.data[index].productId,
+            quantity: cartItemsResponse.data[index].quantity,
+            img: response.data.image,
+            title: response.data.title,
+            price: response.data.price
+          }));
+          console.log(products);
+          dispatch(setCart(products));
+        } catch (error) {
           console.error('Error fetching data: ', error);
-        });
-      AOS.init({
-          duration: 800,
-          easing: "ease-in-sine",
-          delay: 100,
-          offset: 100,
+        }
+      };
+
+      fetchUserAndCartItems().then(() => {
       });
+
+      AOS.init({
+        duration: 800,
+        easing: "ease-in-sine",
+        delay: 100,
+        offset: 100,
+      });
+
       AOS.refresh();
     }, [dispatch]);
 

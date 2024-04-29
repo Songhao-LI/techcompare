@@ -60,15 +60,20 @@ const ShoppingCart = (handleOrderPopup) => {
         payload: { id: item.id, quantity: newQuantity }
       });
     } else {
-      dispatch({
-        type: 'REMOVE_FROM_CART',
-        payload: item.id
-      });
+      removeFromCart(item);
     }
   };
+  const removeFromCart = (item) => {
+    dispatch({
+      type: 'REMOVE_FROM_CART',
+      payload: item.id
+    });
+    const response = axios.delete(`/api/cart-items/${current_user.username}/${item.id}`);
+    console.log(response)
+  }
 
   return (
-    <div className="h-screen bg-gray-100 dark:bg-gray-900 pt-20">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 pt-20">
       <h1 className="mb-10 text-center text-2xl font-bold dark:text-slate-500">Cart Items</h1>
       <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
         <div className="rounded-lg md:w-2/3">
@@ -119,7 +124,7 @@ const ShoppingCart = (handleOrderPopup) => {
                 </div>
                 <div className="flex items-center space-x-4">
                   <p className="text-sm">unit price: ${item.price}</p>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" onClick={() => dispatch({type: 'REMOVE_FROM_CART', payload: item.id})}
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" onClick={() => removeFromCart(item)}
                        stroke="currentColor" className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                   </svg>
