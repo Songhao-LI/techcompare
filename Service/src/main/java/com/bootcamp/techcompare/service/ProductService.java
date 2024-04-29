@@ -95,7 +95,7 @@ public class ProductService {
 
     public void addToCart(CartItem cartItem) {
         cartItemDao.persist(cartItem);
-        cartItemDao.removeDuplicates();
+//        cartItemDao.removeDuplicates();
     }
 
     @Transactional
@@ -104,7 +104,7 @@ public class ProductService {
     }
 
     public List<CartItem> getCartItemsByUsername(String username) {
-        cartItemDao.removeDuplicates();
+//        cartItemDao.removeDuplicates();
         return cartItemDao.getCartItemsByUsername(username);
     }
 
@@ -113,7 +113,7 @@ public class ProductService {
     }
 
     public void updateCartItem(String username, int productId, int newQuantity) {
-        cartItemDao.removeDuplicates();
+//        cartItemDao.removeDuplicates();
         List<CartItem> cartItems = cartItemDao.getCartItemsByUsername(username);
         for (CartItem cartItem : cartItems) {
             if (cartItem.getProductId() == productId && cartItem.getUsername().equals(username)) {
