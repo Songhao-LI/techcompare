@@ -3,7 +3,7 @@ import AOS from 'aos';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Fuse from 'fuse.js';
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 
 const SearchResult = () => {
   const [products, setProducts] = useState([])
@@ -22,22 +22,24 @@ const SearchResult = () => {
     });
     AOS.refresh();
 
-    const fetchData = async () => {
+    const getData = async () => {
       try {
-        const response = await axios.get(`/api/products?q=${encodeURIComponent(query)}`);
-        const fuse = new Fuse(response.data, {
-          keys: ['title', 'description'], // fields to index for searching
-          includeScore: true,
-          threshold: 0.4
-        });
-        const result = fuse.search(query);
-        setProducts(result.map(item => item.item));
+        // const response = await axios.get(`/api/products?q=${encodeURIComponent(query)}`);
+        const response = await axios.get('/api/products');
+        return response.data
       } catch (error) {
         console.error('Failed to fetch products', error);
       }
-      setLoading(false);
     };
-    fetchData().then(() => {
+    getData().then((data) => {
+      const fuse = new Fuse(data, {
+        keys: ['title', 'description'], // fields to index for searching
+        includeScore: true,
+        threshold: 0.4
+      });
+      setLoading(false);
+      const result = fuse.search(query);
+      setProducts(result.map(item => item.item));
     });
   }, [query]);  // 依赖项是 query，这样当查询参数变化时，会重新获取数据
 
