@@ -194,7 +194,9 @@ public class ProductController {
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) })})
     @PostMapping(value = "/wishlist-items", produces = "application/json")
     public ResponseEntity<String> addToWishlist(@RequestBody WishlistItem wishlistItem) {
+//    public ResponseEntity<String> addToWishlist(@RequestParam(value = "username") String username, @RequestParam(value = "productId") int productId) {
         productService.addToWishlist(wishlistItem);
+//        productService.addToWishlist(new WishlistItem(username, productId));
         return ResponseEntity.ok("Product added to wishlist successfully.");
     }
 

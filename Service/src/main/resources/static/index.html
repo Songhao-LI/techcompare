@@ -12,6 +12,19 @@
     <button type="submit">Search</button>
 </form>
 
+<form action="/api/checkout" method="post">
+    <input type="text" name="username" required>
+    <input type="text" name="userEmail"required>
+    <button type="submit">go stripe!</button>
+</form>
+
+<form action="/api/wishlist-items" method="post">
+    <input type="text" name="username" required>
+    <input type="text" name="productId"required>
+    <button type="submit">go wishlist!</button>
+</form>
+
+
 <hr>
 <div style="align-items: center;display: flex;justify-content: center;">
 <form action="/logout" method="post">

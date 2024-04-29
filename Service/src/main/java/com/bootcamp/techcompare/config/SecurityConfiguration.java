@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,7 +41,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 //        all requests require authentication
-        http.authorizeHttpRequests(request -> request
+        http.
+                csrf().disable().
+//                csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())).
+                authorizeHttpRequests(request -> request
 //                        .requestMatchers("/").permitAll()
 //                        .requestMatchers("/api/*").hasRole("ADMIN")
 //                        .requestMatchers("/api/*").hasAnyRole("ADMIN", "USER")

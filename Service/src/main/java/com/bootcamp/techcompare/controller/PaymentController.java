@@ -48,6 +48,8 @@ public class PaymentController {
                     content = @Content)})
     @PostMapping("/checkout")
     public String hostedCheckout(@RequestBody PaymentRequest paymentRequest) throws StripeException {
+//    public String hostedCheckout(@RequestParam("username") String username, @RequestParam("userEmail") String userEmail) throws StripeException {
+
         Stripe.apiKey = STRIPE_API_KEY;
 
         // Start by finding an existing customer record from Stripe or creating a new one if needed

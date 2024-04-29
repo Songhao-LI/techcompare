@@ -52,33 +52,6 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
     dispatch(clearUser());
   }
   const getInfo = async () => {
-    try {
-      const response = await axios.post('/api/wishlist-items', {
-        username: current_user.username,
-        productId: 1,
-      }).then(response => {
-        console.log('Item added to wishlist', response.data);
-      }).catch((error) => {
-        console.error("Error adding product to wishlist", error);
-      });
-
-      const res = await axios.get('/api/wishlist-items', {
-        username: current_user.username
-      }).then((res) => {
-        console.log(res)
-      }).catch((error) => {
-        console.error("Error fetching wishlist items", error);
-      });
-      console.log('Login successful:', response.data);
-    } catch (error) {
-      if (error.response) {
-        console.error('Login failed:', error.response.data);
-      } else if (error.request) {
-        console.error('No response:', error.request);
-      } else {
-        console.error('Error:', error.message);
-      }
-    }
   }
 
   return (
@@ -190,11 +163,18 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
                             <span onClick={getInfo} className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
                               Account Info
                             </span>
-                            <span className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                            <Link to='/Wishlist'>
+                            <span
+                                className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                              My Wishlist
+                            </span>
+                            </Link>
+                            <span
+                                className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
                               Settings
                             </span>
                             <span onClick={SignOut}
-                              className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                                  className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
                               Sign Out
                             </span>
                           </li>
@@ -206,7 +186,7 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
               </div>
             )}
             {!current_user.isLogin && (
-              <Button className="relative"
+                <Button className="relative"
                       text="Login"
                       bgColor={"bg-primary"}
                       textColor={"text-white"} handler={handleLoginPopup}
