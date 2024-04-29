@@ -161,10 +161,12 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
                                 className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
                               Account Info
                             </span>
+                            <Link to='/Wishlist'>
                             <span
                                 className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
                               My Wishlist
                             </span>
+                            </Link>
                             <span
                                 className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
                               Settings
