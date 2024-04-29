@@ -81,13 +81,13 @@ const SearchResult = () => {
       ) : (
         <div>
           <div className="dark:text-slate-500">
-            <h1 className="text-center text-2xl font-bold dark:text-white text-black">Search Result for: {query}</h1>
+            <h1 className="text-center text-2xl font-bold dark:text-white text-black">Search Results for: {query}</h1>
           </div>
           <section className="py-10">
             <div className="mx-auto max-w-6xl p-6">
               <ul>
                 {products.map(product => (
-                  <li key={product.id}
+                  <li key={product.id} data-aos="fade-up"
                       className="dark:shadow-cyan-500/50 shadow-xl mb-4 p-3 dark:bg-gray-500 bg-white shadow-lg hover:shadow-xl rounded-xl hover:transform hover:scale-105 duration-300">
                     <div className="flex items-center space-x-4" onClick={() => handleProductClick(product.id)}>
                       <img src={product.image} alt={product.title} className="h-20 w-20 object-cover rounded-xl" />
