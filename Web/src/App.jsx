@@ -11,6 +11,7 @@ import ProductDetail from "./components/ProductDetail/ProductDetail.jsx";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Wishlist from "./components/Wishlist/Wishlist.jsx";
 import Compare from "./components/Compare/Compare.jsx";
+import SearchResult from "./components/Search/SearchResult";
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -39,12 +40,13 @@ const App = () => {
                 <Login loginPopup={loginPopup} handleLoginPopup={handleLoginPopup}
                        handleRegisterPopup={handleRegisterPopup}/>
                 <Routes>
-                    <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup}/>}/>
+                    <Route path="/" element={<Home orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup}/>}/>
                     <Route path="/FilterProducts" element={<FilterProducts/>}/>
                     <Route path="/ShoppingCart" element={<ShoppingCart handleOrderPopup={handleOrderPopup}/>}/>
                     <Route path="/ProductDetail/:productId" element={<ProductDetail/>}/>
                     <Route path="/Wishlist" element={<Wishlist/>}/>
                     <Route path="/Compare" element={<Compare/>}/>
+                    <Route path="/SearchResult" element={<SearchResult/>}/>
                     {/* 其他路由 */}
                 </Routes>
             </HashRouter>

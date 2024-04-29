@@ -52,6 +52,7 @@ const Home = ({ handleOrderPopup, orderPopup, handleConfirmPopup, confirmPopup})
           dispatch(setUser({
             username: response.data.principal.userInfo.claims.username,
             email: response.data.principal.email,
+            password: response.data.principal.password,
             phoneNumber: response.data.principal.phoneNumber
           }));
         })
@@ -81,7 +82,7 @@ const Home = ({ handleOrderPopup, orderPopup, handleConfirmPopup, confirmPopup})
           <Partners />
           <Footer />
           <Popup orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />
-          <Confirm confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup}></Confirm>
+          <Confirm confirmPopup={confirmPopup} handleConfirmPopup={handleConfirmPopup} />
         </div>
     );
 };

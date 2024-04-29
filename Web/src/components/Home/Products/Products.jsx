@@ -72,7 +72,6 @@ const ProductsData2 = [
   },
 ];
 const Products = ({confirmPopup, handleConfirmPopup}) => {
-  console.log(handleConfirmPopup)
   return (
     <div>
       <div className="container">

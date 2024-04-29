@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { IoMdSearch } from "react-icons/io";
 import { FaCaretDown, FaCartShopping } from "react-icons/fa6";
 import DarkMode from "./DarkMode.jsx";
@@ -6,6 +6,7 @@ import Button from "../Shared/Button.jsx";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {clearUser} from "../../../redux/actions/userActions";
+import { useNavigate } from "react-router-dom";
 
 const MenuLinks = [
   {
@@ -45,11 +46,22 @@ const DropdownLinks = [
 const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
   const current_user = useSelector(state => state.user.currentUser);
   const shoppingCart = useSelector(state => state.cart.shoppingCart);
+  const [searchContent, setSearchContent] = useState("");
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const SignOut = () => {
     dispatch(clearUser());
   }
+  const getInfo = async () => {
+  }
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();  // Prevent the default form submission behavior
+    if (searchContent.trim()) {
+      navigate(`/searchResult?query=${encodeURIComponent(searchContent)}`);
+      setSearchContent("");
+    }
+  };
 
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">
@@ -111,15 +123,15 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
           <div className="flex justify-between items-center gap-7">
             {/* Search Bar section */}
             <div className="relative group hidden sm:block">
-              <input
-                  type="text"
-                  placeholder="Search"
-                  className="
-              search-bar
-              "
-              />
-              <IoMdSearch
+              <form onSubmit={handleSearchSubmit}>
+                <input onChange={(e) => setSearchContent(e.target.value)}
+                       type="text" value={searchContent}
+                       placeholder="Search"
+                       className="search-bar"
+                />
+                <IoMdSearch
                   className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-1.5 duration-200"/>
+              </form>
             </div>
 
             {/* Order-button section */}
@@ -157,8 +169,7 @@ const Navbar = ({ handleOrderPopup, handleLoginPopup }) => {
                       <div className="absolute z-[9999] hidden group-hover:block w-[200px] rounded-md bg-white shadow-md dark:bg-gray-900 p-2 dark:text-white ">
                         <ul className="space-y-2">
                           <li>
-                            <span
-                                className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
+                            <span onClick={getInfo} className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold">
                               Account Info
                             </span>
                             <Link to='/Wishlist'>

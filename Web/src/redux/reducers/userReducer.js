@@ -3,6 +3,7 @@ const initialState = {
       username: null,
       email: null,
       phoneNumber: null,
+      password: null,
       isLogin: false
     }
 };
