@@ -1,13 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import React, {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
 import ProductReviews from "./ProductReviews.jsx";
+import StoreMap from "./StoreMap.jsx";
 import axios from "axios";
 import {useSelector} from "react-redux";
+
 
 const ProductDetail = () => {
     const {productId} = useParams();
     const [productDetails, setProductDetails] = useState(null);
     const [stores, setStores] = useState([]);
+    const [showMap, setShowMap] = useState(true);
     const [error, setError] = useState('');
     const currentUser = useSelector((state) => state.user.currentUser);
 
@@ -27,18 +30,58 @@ const ProductDetail = () => {
             setError(error.message);
         });
 
-        fetch(`/api/products/${productId}/stores`)
+        // fetch(`/api/products/${productId}/stores`)
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         setStores(data);
+        //     }).catch(error => {
+        //     setError(error.message);
+        // });
+
+        axios.get(`/api/products/${productId}/stores`)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                const storeData = response.data;
+
+                if (storeData.length === 0) {
+                    // No stores available, handle accordingly
+                    setStores([]);  // Set state or handle appropriately
+                    setShowMap(false);  // Set a flag to hide the map component if desired
+                    return;
                 }
-                return response.json();
+
+                // Map storeData to include coordinates using Nominatim geocoding
+                const geocodedStoresPromises = storeData.map(store => {
+                    return axios.get(`https://nominatim.openstreetmap.org/search`, {
+                        params: {
+                            q: store.location,
+                            format: 'json'
+                        }
+                    }).then(response => {
+                        const [result] = response.data; // Get first geocoding result
+                        if (response.data.length == 0) {  // If no valid result found
+                            return { ...store, lat: null, lon: null };
+                        }
+                        return {
+                            ...store,
+                            lat: result.lat,
+                            lon: result.lon
+                        };
+                    });
+                });
+
+                // Wait for all geocoding promises to resolve
+                Promise.all(geocodedStoresPromises).then(geocodedStores => {
+                    setStores(geocodedStores);
+                });
             })
-            .then(data => {
-                setStores(data);
-            }).catch(error => {
-            setError(error.message);
-        });
+            .catch(error => {
+                setError(error.message);
+            });
     }, [productId]);
 
     if (error) {
@@ -141,6 +184,8 @@ const ProductDetail = () => {
                                     ))}
                                 </ul>
                             </div>
+                            {/* Section for storemap */}
+                            {showMap && <StoreMap stores={stores} />}
                         </div>
                     </div>
                 </div>
