@@ -31,6 +31,8 @@ public class ProductService {
     private CartItemDao cartItemDao;
     @Autowired
     private WishlistItemDao wishlistItemDao;
+    @Autowired
+    private ProductDao productDao;
 
     @Autowired
     public ProductService(RestTemplate restTemplate) {
@@ -39,8 +41,8 @@ public class ProductService {
 
     // Fetch all products and search for certain keyword, filter by categories
     public List<Product> searchProducts(String keyword, List<String> categories) {
-        String url = "https://fakestoreapi.com/products";
-        Product[] products = restTemplate.getForObject(url, Product[].class);
+//        String url = "https://fakestoreapi.com/products";
+        Product[] products = productDao.getAllProducts().toArray(new Product[0]);
 
         if (products == null) return List.of();
 
@@ -60,14 +62,16 @@ public class ProductService {
 
     // Fetches a single product by ID
     public Product getProductById(int id) {
-        String url = "https://fakestoreapi.com/products/" + id;
-        return restTemplate.getForObject(url, Product.class);
+//        String url = "https://fakestoreapi.com/products/" + id;
+//        return restTemplate.getForObject(url, Product.class);
+        return productDao.getProductById(id);
     }
 
     public List<String> fetchCategories() {
-        String url = "https://fakestoreapi.com/products/categories";
-        String[] categories = restTemplate.getForObject(url, String[].class);
-        return categories != null ? Arrays.asList(categories) : new ArrayList<>();
+//        String url = "https://fakestoreapi.com/products/categories";
+//        String[] categories = restTemplate.getForObject(url, String[].class);
+//        return categories != null ? Arrays.asList(categories) : new ArrayList<>();
+        return productDao.getCategories();
     }
 
     public void addRating(Review review) {
