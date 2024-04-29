@@ -52,6 +52,7 @@ const Home = ({ handleOrderPopup, orderPopup, handleConfirmPopup, confirmPopup})
           dispatch(setUser({
             username: response.data.principal.fullName,
             email: response.data.principal.email,
+            password: response.data.principal.password,
             phoneNumber: response.data.principal.phoneNumber
           }));
         })

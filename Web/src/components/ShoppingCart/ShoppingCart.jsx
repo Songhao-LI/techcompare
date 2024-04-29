@@ -1,11 +1,17 @@
 import React from "react";
 import AOS from "aos";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AiOutlineFileExcel} from "react-icons/ai"
 import {Link} from "react-router-dom";
+import axios from "axios";
+import {setUser} from "../../redux/actions/userActions";
 
 const ShoppingCart = (handleOrderPopup) => {
+  const current_user = useSelector(state => state.user.currentUser);
   const shoppingCart = useSelector(state => state.cart.shoppingCart);
+  const shippingCost = shoppingCart.length > 0 ? 4.99 : 0.00;
+  const dispatch = useDispatch();
+  console.log(current_user)
 
   React.useEffect(() => {
     AOS.init({
@@ -17,19 +23,48 @@ const ShoppingCart = (handleOrderPopup) => {
     AOS.refresh();
   }, []);
 
-  const handleCheck = () => {
+  const handleCheck = async () => {
     const checkoutUrl = 'https://buy.stripe.com/test_4gw6p8cEA8555nW7st';
-    window.location.href = checkoutUrl;
+    try {
+        // const response = await axios.post('/api/checkout', {
+        //   username: current_user.username,
+        //   userEmail: current_user.email
+        // });
+        const response = await axios.get('/api/test_checkout');
+        console.log('checkout successful:', response);
+        window.location.href = response.data;
+    } catch (error) {
+        if (error.response) {
+            console.error('checkout failed:', error.response.data);
+        } else if (error.request) {
+            console.error('No response:', error.request);
+        } else {
+            console.error('Error:', error.message);
+        }
+    }
   }
   const calculateSubtotal = () => {
     return shoppingCart.reduce((total, item) => {
       return total + (item.price * item.quantity);
     }, 0).toFixed(2);
   };
-  const shippingCost = shoppingCart.length > 0 ? 4.99 : 0.00;
   const calculateTotal = () => {
     const subtotal = parseFloat(calculateSubtotal());
     return (subtotal + shippingCost).toFixed(2);
+  };
+  const handleQuantityChange = (item, delta) => {
+    const newQuantity = item.quantity + delta;
+    if (newQuantity > 0) {
+      dispatch({
+        type: 'UPDATE_QUANTITY',
+        payload: { id: item.id, quantity: newQuantity }
+      });
+    } else {
+      dispatch({
+        type: 'REMOVE_FROM_CART',
+        payload: item.id
+      });
+    }
   };
 
   return (
@@ -75,16 +110,16 @@ const ShoppingCart = (handleOrderPopup) => {
               </div>
               <div className="mt-4 flex justify-between sm:space-y-16 sm:mt-0 sm:block sm:space-x-0">
                 <div className="flex items-center border-gray-100">
-                  <span
+                  <span onClick={() => handleQuantityChange(item, -1)}
                     className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"> - </span>
                   <input className="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" value={item.quantity}
                          min="1"/>
-                  <span
+                  <span onClick={() => handleQuantityChange(item, 1)}
                     className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"> + </span>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <p className="text-sm">unit price: {item.price} $</p>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  <p className="text-sm">unit price: ${item.price}</p>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" onClick={() => dispatch({type: 'REMOVE_FROM_CART', payload: item.id})}
                        stroke="currentColor" className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                   </svg>
