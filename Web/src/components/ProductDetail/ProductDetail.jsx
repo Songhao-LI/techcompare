@@ -64,12 +64,13 @@ const ProductDetail = () => {
                     }).then(response => {
                         const [result] = response.data; // Get first geocoding result
                         if (response.data.length == 0) {  // If no valid result found
-                            return { ...store, lat: null, lon: null };
+                            return { ...store, lat: null, lon: null , hasCoordinates: false };
                         }
                         return {
                             ...store,
                             lat: result.lat,
-                            lon: result.lon
+                            lon: result.lon,
+                            hasCoordinates: true
                         };
                     });
                 });
@@ -178,7 +179,7 @@ const ProductDetail = () => {
                                 <h3 className="font-bold text-lg">Stores:</h3>
                                 <ul className="list-disc list-inside">
                                     {stores.map(store => (
-                                        <li key={store.id}>
+                                        <li key={store.id} className={store.hasCoordinates ? "text-blue-500" : ""}>
                                             {store.location}
                                         </li>
                                     ))}
