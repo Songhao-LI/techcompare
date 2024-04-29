@@ -3,7 +3,8 @@ import {useParams} from "react-router-dom";
 import ProductReviews from "./ProductReviews.jsx";
 import StoreMap from "./StoreMap.jsx";
 import axios from "axios";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {addToCart} from "../../redux/actions/cartActions";
 
 
 const ProductDetail = () => {
@@ -13,6 +14,8 @@ const ProductDetail = () => {
     const [showMap, setShowMap] = useState(true);
     const [error, setError] = useState('');
     const currentUser = useSelector((state) => state.user.currentUser);
+    const shoppingCart = useSelector(state => state.cart.shoppingCart);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         fetch(`/api/products/${productId}`)
@@ -103,6 +106,48 @@ const ProductDetail = () => {
             alert('Failed to add to wishlist');
         });
     };
+    const addToCartHandler = async () => {
+      const existingItem = shoppingCart.find(cartItem => cartItem.id === productId);
+
+      if (existingItem) {
+        // Item exists, so update its quantity
+        const newQuantity = existingItem.quantity + 1;
+        try {
+          const response = await axios.put(`/api/cart-items/${currentUser.username}/${productId}`, JSON.stringify(newQuantity), {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          dispatch({
+            type: 'UPDATE_QUANTITY',
+            payload: { id: existingItem.id, quantity: newQuantity }
+          });
+          alert('Successfully added to shopping cart');
+        } catch (error) {
+          console.error('Error updating cart item:', error);
+        }
+      } else {
+        // Item does not exist, so add new item
+        const child = {
+          id: productId,
+          quantity: 1,
+          img: productDetails.image,
+          title: productDetails.title,
+          price: productDetails.price
+        };
+        try {
+          const response = await axios.post('/api/cart-items', {
+            username: currentUser.username,
+            productId: child.id,
+            quantity: 1
+          });
+          dispatch(addToCart(child));
+          alert('Successfully added to shopping cart');
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+        }
+      }
+    }
     return (
         <>
             <div className="bg-gray-100 dark:bg-gray-800 py-8">
@@ -160,7 +205,7 @@ const ProductDetail = () => {
                             {/* Action buttons */}
                             <div className="flex -mx-2 mb-4">
                                 <div className="w-1/2 px-2">
-                                    <button
+                                    <button onClick={addToCartHandler}
                                         className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Add
                                         to Cart
                                     </button>
