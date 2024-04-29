@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -96,7 +95,7 @@ public class ProductService {
 
     public void addToCart(CartItem cartItem) {
         cartItemDao.persist(cartItem);
-        cartItemDao.merge();
+//        cartItemDao.removeDuplicates();
     }
 
     @Transactional
@@ -105,7 +104,7 @@ public class ProductService {
     }
 
     public List<CartItem> getCartItemsByUsername(String username) {
-        cartItemDao.merge();
+//        cartItemDao.removeDuplicates();
         return cartItemDao.getCartItemsByUsername(username);
     }
 
@@ -114,7 +113,7 @@ public class ProductService {
     }
 
     public void updateCartItem(String username, int productId, int newQuantity) {
-        cartItemDao.merge();
+//        cartItemDao.removeDuplicates();
         List<CartItem> cartItems = cartItemDao.getCartItemsByUsername(username);
         for (CartItem cartItem : cartItems) {
             if (cartItem.getProductId() == productId && cartItem.getUsername().equals(username)) {
@@ -122,7 +121,7 @@ public class ProductService {
                 if (newQuantity == 0) {
                     cartItemDao.remove(cartItem);
                 } else {
-                    cartItemDao.persist(cartItem);
+                    cartItemDao.merge(cartItem);
                 }
                 break;
             }

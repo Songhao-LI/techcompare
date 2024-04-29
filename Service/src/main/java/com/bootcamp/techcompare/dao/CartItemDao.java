@@ -43,7 +43,12 @@ public class CartItemDao {
     }
 
     @Transactional
-    public void merge() {
+    public void merge(CartItem cartItem) {
+        em.merge(cartItem);
+    }
+
+    @Transactional
+    public void removeDuplicates() {
         // different cartitems may have same username and same productId, we need to merge their quantities and only keep one record
         // Retrieve all cart items
         List<CartItem> cartItems = em.createQuery("SELECT c FROM CartItem c", CartItem.class)
