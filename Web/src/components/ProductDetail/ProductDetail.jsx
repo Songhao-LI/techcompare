@@ -63,6 +63,9 @@ const ProductDetail = () => {
                         }
                     }).then(response => {
                         const [result] = response.data; // Get first geocoding result
+                        if (response.data.length == 0) {  // If no valid result found
+                            return { ...store, lat: null, lon: null };
+                        }
                         return {
                             ...store,
                             lat: result.lat,
