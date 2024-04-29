@@ -12,7 +12,7 @@ const ShoppingCart = (handleOrderPopup) => {
   const [isLoading, setIsLoading] = useState(false);
   const current_user = useSelector(state => state.user.currentUser);
   const shoppingCart = useSelector(state => state.cart.shoppingCart);
-  const shippingCost = shoppingCart.length > 0 ? 0.00 : 0.00;
+  const shippingCost = shoppingCart.length > 0 ? 0.00 : 12.99;
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -88,31 +88,17 @@ const ShoppingCart = (handleOrderPopup) => {
 
   return (
     <div className="shopping-cart-container">
-      {/* 加载覆盖层 */}
       {isLoading && (
-        <div className="h-screen w-screen fixed top-0 left-0 bg-black/50 z-50 backdrop-blur-sm">
-          <div id="loading" aria-label="Loading..." role="status" className="pt-32 flex flex-col items-center space-x-2">
-            <svg className="h-40 w-40 animate-spin stroke-gray-500" viewBox="0 0 256 256">
-              <line x1="128" y1="32" x2="128" y2="64" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="24"></line>
-              <line x1="195.9" y1="60.1" x2="173.3" y2="82.7" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="24"></line>
-              <line x1="224" y1="128" x2="192" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
-              </line>
-              <line x1="195.9" y1="195.9" x2="173.3" y2="173.3" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="24"></line>
-              <line x1="128" y1="224" x2="128" y2="192" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
-              </line>
-              <line x1="60.1" y1="195.9" x2="82.7" y2="173.3" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="24"></line>
-              <line x1="32" y1="128" x2="64" y2="128" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="24"></line>
-              <line x1="60.1" y1="60.1" x2="82.7" y2="82.7" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="24">
-              </line>
-            </svg>
-            <span className="text-4xl font-medium text-gray-500">Loading...</span>
-          </div>
+        <div id="loading-overlay"
+             className="fixed inset-0 z-50 flex items-center justify-center dark:bg-black/50 bg-gray-900 bg-opacity-60">
+          <svg className="animate-spin h-8 w-8 text-white mr-3" xmlns="http://www.w3.org/2000/svg" fill="none"
+               viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path className="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+            </path>
+          </svg>
+          <span className="text-white text-3xl font-bold">Loading...</span>
         </div>
       )}
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 pt-20">
@@ -183,7 +169,16 @@ const ShoppingCart = (handleOrderPopup) => {
             </div>
             <div className="flex justify-between">
               <p className="text-gray-700">Shipping</p>
-              <p className="text-gray-700">${shippingCost}</p>
+              <div className="flex items-center space-x-2">
+                {shoppingCart.length > 0 ? (
+                  <>
+                    <p className="text-gray-700 line-through">$12.99</p>
+                    <p className="text-gray-700">Free</p>
+                  </>) : (
+                  <p className="text-gray-700">$12.99</p>
+                )
+                }
+              </div>
             </div>
             <hr className="my-4"/>
             <div className="flex justify-between">
