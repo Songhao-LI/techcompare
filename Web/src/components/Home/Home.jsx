@@ -45,48 +45,7 @@ const BannerData2 = {
 
 // eslint-disable-next-line react/prop-types
 const Home = ({ handleOrderPopup, orderPopup, handleConfirmPopup, confirmPopup}) => {
-    const dispatch = useDispatch();
     React.useEffect(() => {
-      const fetchUserAndCartItems = async () => {
-        try {
-          const userResponse = await axios.get('/api/user/me');
-
-          dispatch(setUser({
-            username: userResponse.data.principal.userInfo.claims.username,
-            email: userResponse.data.principal.email,
-            password: userResponse.data.principal.password,
-            phoneNumber: userResponse.data.principal.phoneNumber
-          }));
-
-          const username = userResponse.data.principal.userInfo.claims.username;
-          const cartItemsResponse = await axios.get('/api/cart-items', {
-            params: { username: username }
-          });
-
-          console.log(userResponse.data);
-          console.log(cartItemsResponse.data);
-          const productDetailsPromises = cartItemsResponse.data.map(item =>
-            axios.get(`/api/products/${item.productId}`)
-          );
-
-          const productDetailsResponses = await Promise.all(productDetailsPromises);
-          const products = productDetailsResponses.map((response, index) => ({
-            id: cartItemsResponse.data[index].productId,
-            quantity: cartItemsResponse.data[index].quantity,
-            img: response.data.image,
-            title: response.data.title,
-            price: response.data.price
-          }));
-          console.log(products);
-          dispatch(setCart(products));
-        } catch (error) {
-          console.error('Error fetching data: ', error);
-        }
-      };
-
-      fetchUserAndCartItems().then(() => {
-      });
-
       AOS.init({
         duration: 800,
         easing: "ease-in-sine",
@@ -95,7 +54,7 @@ const Home = ({ handleOrderPopup, orderPopup, handleConfirmPopup, confirmPopup})
       });
 
       AOS.refresh();
-    }, [dispatch]);
+    }, []);
 
     return (
         <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
